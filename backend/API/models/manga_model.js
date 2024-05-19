@@ -21,17 +21,25 @@ const MangaSchema = new Schema({
         type: [String],
         required: true
     },
-    status: {
-        type: [String],
+    manga_status: {
+        type: String,
         required: true
     },
-    chapters: {
-        type: Number,
-        default: null
+    manga_state: {
+        type: String,
+        required: true
+    },
+    author: {
+        type: String,
+        required: true
     },
     year_published: {
         type: Number,
         default: null
+    },
+    cover_art: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 
