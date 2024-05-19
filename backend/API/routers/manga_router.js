@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 //* GET
-
+router.get('/:mangaId', mangaController.searchMangaById);
 
 //* PUT
 
