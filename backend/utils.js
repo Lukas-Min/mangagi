@@ -57,3 +57,22 @@ export const checkNumberField = (field) => {
     return result;
 
 }
+
+export const containsCharacter = (field, character) => {
+
+    let result = false;
+
+    if(field == null)
+    {
+        return result;
+    }
+
+    if(field.includes(character))
+    {
+        return result;
+    }
+
+    result = true;
+    return result;
+
+}
