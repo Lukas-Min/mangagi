@@ -7,7 +7,8 @@ const { Schema } = mongoose;
 const MangaSchema = new Schema({
     manga_id: {
         type: String,
-        required: true
+        required: false,
+        default: ""
     },
     title: {
         type: String,
@@ -35,11 +36,13 @@ const MangaSchema = new Schema({
     },
     year_published: {
         type: Number,
+        required: false,
         default: null
     },
     cover_art: {
         type: String,
-        required: true
+        required: false,
+        default: ""
     }
 }, { timestamps: true });
 
