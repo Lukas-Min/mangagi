@@ -13,7 +13,7 @@ import connectDB from './API/models/con_db.js';
 
 
 //* IMPORT ALL ROUTERS
-// import mangaRouter from './API/routers/manga_router.js';
+import mangaRouter from './API/routers/manga_router.js';
 
 
 
@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 
 
 //* DEFINE MODULE ENDPOINT + ROUTER
-// app.use('/mangas', mangaRouter);
+app.use('/mangas', mangaRouter);
 
 
 
