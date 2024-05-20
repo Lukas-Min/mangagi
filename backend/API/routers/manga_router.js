@@ -7,13 +7,15 @@ const router = express.Router();
 
 
 //* GET
+router.get('/find/all', mangaController.findAllManga);
+router.get('/:mangaId', mangaController.searchMangaById);
 
 
 //* PUT
 
 
 //* DELETE
-
+router.delete('/:id', mangaController.deleteMangabyId);
 
 
 export default router;
