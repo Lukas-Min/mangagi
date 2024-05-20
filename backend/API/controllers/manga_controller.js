@@ -216,26 +216,6 @@ const addManga = async (req, res, next) => {
             });
         }
 
-        if (!checkMandatoryField(author)) {
-            return res.status(400).send({
-                successful: false,
-                message: "Author is not defined."
-            });
-        }
-
-        if (!checkMandatoryField(year_published)) {
-            return res.status(400).send({
-                successful: false,
-                message: "Year published is not defined."
-            });
-        }
-
-        if (!checkMandatoryField(cover_art)) {
-            return res.status(400).send({
-                successful: false,
-                message: "Cover art is not defined."
-            });
-        }
 
         const newManga = new MangaModel({
             title,
@@ -244,10 +224,7 @@ const addManga = async (req, res, next) => {
             manga_status,
             manga_state,
             author,
-            year_published,
-            cover_art,
-            createdAt: moment.now(),
-            updatedAt: moment.now()
+            year_published
         });
 
         await newManga.save();
