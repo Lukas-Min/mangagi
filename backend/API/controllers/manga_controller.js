@@ -246,8 +246,8 @@ const addManga = async (req, res, next) => {
             author,
             year_published,
             cover_art,
-            createdAt: moment().toISOString(),
-            updatedAt: moment().toISOString()
+            createdAt: moment.now(),
+            updatedAt: moment.now()
         });
 
         await newManga.save();
