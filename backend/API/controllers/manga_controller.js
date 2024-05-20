@@ -1,7 +1,7 @@
 //* THIS FILE CONTAINS THE APIs (custom and 3rd party)
-import { checkMandatoryField, checkStringField, containsCharacter } from '../../utils.js';
+import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType } from '../../utils.js';
 import MangaModel from '../models/manga_model.js';
-import mongoose from 'mongoose';
+
 
 const searchMangaById = async (req, res, next) => { //* This is a custom API that connects to MangaDex API
 
@@ -165,20 +165,135 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
         })
 
     } 
-    catch (error) 
+    catch (err) 
     {
-        return res.status(200).send({
-            successful: true,
+        return res.status(500).send({
+            successful: false,
             message: 'Error finding all manga data',
-            data: allManga
+            data: err.message
         })
     }
 
 }
 
+const updateMangaDetail = async (req, res, next) => { //* This API updates manga data according to its oId (_id)
+
+    let { id } = req.params;
+    let { manga_id, title, description, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+
+    try
+    {
+
+        if(!checkMandatoryField(id))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Id is not defined."
+            })
+        }
+
+        if(!checkStringType(manga_id))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga id is not of string data type."
+            })
+        }
+
+        if(!checkMandatoryField(title))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Title is not defined."
+            })
+        }
+
+        if(!checkMandatoryField(description))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Description is not defined."
+            })
+        }
+
+        if(!checkMandatoryArrayField([genre]))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Genre is not defined."
+            })
+        }
+
+        if(!checkMandatoryField(manga_status))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga status is not defined."
+            })
+        }
+
+        if(!checkMandatoryField(manga_state))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga state is not defined."
+            })
+        }
+
+        if(!checkStringType(cover_art))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Cover art is not of string data type."
+            })
+        }
+    
+        const updateManga = await MangaModel.findByIdAndUpdate(id, {
+            $set: {
+                manga_id,
+                title,
+                description,
+                genre,
+                manga_status,
+                manga_state,
+                author,
+                year_published,
+                cover_art,
+                updatedAt: new Date().toISOString()
+            },
+            $inc: { __v: 1 }
+        });
+
+        if(!updateManga)
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Error updating manga data."
+            })
+        }
+
+        return res.status(200).send({
+            successful: true,
+            message: "Manga data updated successfully."
+        })
+
+
+    }
+    catch (err)
+    {
+        return res.status(500).send({
+            successful: false,
+            message: 'Error updating manga data',
+            data: err.message
+        })
+    }
+
+}
 
 export default { 
     searchMangaById,
     deleteMangabyId,
-    findAllManga
+    findAllManga,
+    updateMangaDetail,
+    
 }
