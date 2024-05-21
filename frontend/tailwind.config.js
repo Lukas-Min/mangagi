@@ -12,6 +12,11 @@ export default {
         'amaranth': '#AC274F',
         'blush': '#EB638B',
         'rose': '#FFD9DA',
+      },
+
+      spacing: {
+        '128': '27rem',
+        '150': '35rem',
       }
     },
   },
