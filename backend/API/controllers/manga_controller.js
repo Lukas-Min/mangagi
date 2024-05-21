@@ -45,11 +45,19 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
         .filter(tag => tag.attributes.group === "genre")
         .map(tag => tag.attributes.name.en);
 
-        const authorUrl = `https://api.mangadex.org/author/${mangaData.data.relationships[0].id}`;
+        const author = mangaData.data.relationships
+        .filter(relationship => relationship.type === "author")
+        .map(relationship => relationship.id);
+
+        const authorUrl = `https://api.mangadex.org/author/${author}`;
         const authorResponse = await fetch(authorUrl);
         const authorData = await authorResponse.json();
 
-        const coverArtUrl = `https://api.mangadex.org/cover/${mangaData.data.relationships[2].id}`
+        const mangaCover = mangaData.data.relationships
+        .filter(relationship => relationship.type === "cover_art")
+        .map(relationship => relationship.id);
+
+        const coverArtUrl = `https://api.mangadex.org/cover/${mangaCover}`
         const coverArtResponse = await fetch(coverArtUrl);
         const coverArtData = await coverArtResponse.json();
 
@@ -57,7 +65,7 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
             successful: true,
             message: "Manga data fetched successfully.",
             manga_id: mangaData.data.id,
-            title: mangaData.data.attributes.title.en,
+            title: mangaData.data.attributes.title.en || mangaData.data.attributes.altTitles[2].en,
             description: mangaData.data.attributes.description.en,
             genre: genreTags,
             manga_status: mangaData.data.attributes.status,
