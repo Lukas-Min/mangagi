@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import About from './pages/About';
 import AddManga from "./pages/AddManga";
 import EditManga from "./pages/EditManga";
+import SearchManga from "./pages/SearchManga";
 
 export const App = () => {
   return (
@@ -17,6 +18,7 @@ export const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/add-manga" element={<AddManga />} />
         <Route path="/edit-manga" element={<EditManga />} />
+        <Route path="/search-manga" element={<SearchManga />} />
       </Routes>
     </Router>
   )
