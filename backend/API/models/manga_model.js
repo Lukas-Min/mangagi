@@ -8,40 +8,50 @@ const MangaSchema = new Schema({
     manga_id: {
         type: String,
         required: false,
+        trim: true,
         default: ""
     },
     title: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     genre: {
         type: [String],
-        required: true
+        required: true,
+        trim: true
     },
     manga_status: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     manga_state: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     author: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        default: "Anonymous"
     },
     year_published: {
         type: Number,
         required: false,
-        default: null
+        trim: true,
+        default: ""
     },
     cover_art: {
         type: String,
         required: false,
+        trim: true,
         default: ""
     }
 }, { timestamps: true });

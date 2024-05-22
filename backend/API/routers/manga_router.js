@@ -12,7 +12,7 @@ router.get('/:mangaId', mangaController.searchMangaById);
 
 
 //* PUT
-
+router.put('/update/:id', mangaController.updateMangaDetail);
 
 //* DELETE
 router.delete('/:id', mangaController.deleteMangabyId);

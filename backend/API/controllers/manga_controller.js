@@ -1,8 +1,6 @@
 //* THIS FILE CONTAINS THE APIs (custom and 3rd party)
-import { checkMandatoryField, checkStringField, containsCharacter } from '../../utils.js';
+import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType } from '../../utils.js';
 import MangaModel from '../models/manga_model.js';
-import moment from 'moment';
-import mongoose from 'mongoose';
 
 const searchMangaById = async (req, res, next) => { //* This is a custom API that connects to MangaDex API
 
@@ -46,11 +44,19 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
         .filter(tag => tag.attributes.group === "genre")
         .map(tag => tag.attributes.name.en);
 
-        const authorUrl = `https://api.mangadex.org/author/${mangaData.data.relationships[0].id}`;
+        const author = mangaData.data.relationships
+        .filter(relationship => relationship.type === "author")
+        .map(relationship => relationship.id);
+
+        const authorUrl = `https://api.mangadex.org/author/${author}`;
         const authorResponse = await fetch(authorUrl);
         const authorData = await authorResponse.json();
 
-        const coverArtUrl = `https://api.mangadex.org/cover/${mangaData.data.relationships[2].id}`
+        const mangaCover = mangaData.data.relationships
+        .filter(relationship => relationship.type === "cover_art")
+        .map(relationship => relationship.id);
+
+        const coverArtUrl = `https://api.mangadex.org/cover/${mangaCover}`
         const coverArtResponse = await fetch(coverArtUrl);
         const coverArtData = await coverArtResponse.json();
 
@@ -58,7 +64,7 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
             successful: true,
             message: "Manga data fetched successfully.",
             manga_id: mangaData.data.id,
-            title: mangaData.data.attributes.title.en,
+            title: mangaData.data.attributes.title.en || mangaData.data.attributes.altTitles[2].en,
             description: mangaData.data.attributes.description.en,
             genre: genreTags,
             manga_status: mangaData.data.attributes.status,
@@ -166,12 +172,12 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
         })
 
     } 
-    catch (error) 
+    catch (err) 
     {
-        return res.status(200).send({
-            successful: true,
+        return res.status(500).send({
+            successful: false,
             message: 'Error finding all manga data',
-            data: allManga
+            data: err.message
         })
     }
 
@@ -244,10 +250,125 @@ const addManga = async (req, res, next) => {
         });
     }
 };
+const updateMangaDetail = async (req, res, next) => { //* This API updates manga data according to its oId (_id)
+
+    let { id } = req.params;
+    let { manga_id, title, description, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+
+    try
+    {
+
+        if(!checkMandatoryField(id))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Id is not defined."
+            })
+        }
+
+        if(!checkStringType(manga_id))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga id is not of string data type."
+            })
+        }
+
+        if(!checkMandatoryField(title))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Title is not defined."
+            })
+        }
+
+        if(!checkMandatoryField(description))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Description is not defined."
+            })
+        }
+
+        if(!checkMandatoryArrayField([genre]))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Genre is not defined."
+            })
+        }
+
+        if(!checkMandatoryField(manga_status))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga status is not defined."
+            })
+        }
+
+        if(!checkMandatoryField(manga_state))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga state is not defined."
+            })
+        }
+
+        if(!checkStringType(cover_art))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Cover art is not of string data type."
+            })
+        }
+    
+        const updateManga = await MangaModel.findByIdAndUpdate(id, {
+            $set: {
+                manga_id,
+                title,
+                description,
+                genre,
+                manga_status,
+                manga_state,
+                author,
+                year_published,
+                cover_art,
+                updatedAt: new Date().toISOString()
+            },
+            $inc: { __v: 1 }
+        });
+
+        if(!updateManga)
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Error updating manga data."
+            })
+        }
+
+        return res.status(200).send({
+            successful: true,
+            message: "Manga data updated successfully."
+        })
+
+
+    }
+    catch (err)
+    {
+        return res.status(500).send({
+            successful: false,
+            message: 'Error updating manga data',
+            data: err.message
+        })
+    }
+
+}
 
 export default { 
     searchMangaById,
     deleteMangabyId,
     findAllManga,
-    addManga
+    addManga,
+    updateMangaDetail,
+    
 }

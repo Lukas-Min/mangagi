@@ -3,13 +3,23 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // PAGES
 import Home from "./pages/Home";
+import Navbar from './components/Navbar';
+import About from './pages/About';
+import AddManga from "./pages/AddManga";
+import EditManga from "./pages/EditManga";
+import SearchManga from "./pages/SearchManga";
 
 export const App = () => {
   return (
     <Router>
-        <Routes>
-            <Route path="/" element={<Home />} />
-        </Routes>
+      <Navbar></Navbar>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/add-manga" element={<AddManga />} />
+        <Route path="/edit-manga" element={<EditManga />} />
+        <Route path="/search-manga" element={<SearchManga />} />
+      </Routes>
     </Router>
   )
 }

@@ -76,3 +76,36 @@ export const containsCharacter = (field, character) => {
     return result;
 
 }
+
+export const checkMandatoryArrayField = ([field]) => {
+
+    let result = false;
+
+    if(field == null) 
+    {
+        return result;
+    }
+
+    if((typeof(field) == 'object') && field.length == 0)
+    {
+        return result;
+    }
+
+    result = true;
+    return result;
+
+}
+
+export const checkStringType = (field) => {
+
+    let result = false;
+
+    if(typeof(field) != "string")
+    {
+        return result;
+    }
+
+    result = true;
+    return result;
+
+}
