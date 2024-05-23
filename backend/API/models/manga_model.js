@@ -21,6 +21,12 @@ const MangaSchema = new Schema({
         required: true,
         trim: true
     },
+    chapters: {
+        type: Number,
+        required: false,
+        trim: true,
+        default: "Unknown"
+    },
     genre: {
         type: [String],
         required: true,
@@ -46,7 +52,7 @@ const MangaSchema = new Schema({
         type: Number,
         required: false,
         trim: true,
-        default: ""
+        default: "Unknown"
     },
     cover_art: {
         type: String,
