@@ -2,7 +2,6 @@
 import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType } from '../../utils.js';
 import MangaModel from '../models/manga_model.js';
 
-
 const searchMangaById = async (req, res, next) => { //* This is a custom API that connects to MangaDex API
 
     let { mangaId } = req.params;
@@ -184,6 +183,74 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
 
 }
 
+const addManga = async (req, res, next) => {
+    const { title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+
+    try {
+        if (!checkMandatoryField(title)) {
+            return res.status(400).send({
+                successful: false,
+                message: "Title is not defined."
+            });
+        }
+
+        if (!checkMandatoryField(description)) {
+            return res.status(400).send({
+                successful: false,
+                message: "Description is not defined."
+            });
+        }
+
+        if (!Array.isArray(genre) || genre.length === 0) {
+            return res.status(400).send({
+                successful: false,
+                message: "Genre must be a non-empty array."
+            });
+        }
+
+        if (!checkMandatoryField(manga_status)) {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga status is not defined."
+            });
+        }
+
+        if (!checkMandatoryField(manga_state)) {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga state is not defined."
+            });
+        }
+
+
+        const newManga = new MangaModel({
+            title,
+            description,
+            chapters,
+            genre,
+            manga_status,
+            manga_state,
+            author,
+            year_published
+        });
+
+        await newManga.save();
+
+        return res.status(201).send({
+            successful: true,
+            message: 'Manga added successfully.',
+            data: newManga
+        });
+
+    } catch (err) {
+        console.error('Server error:', err);
+        return res.status(500).send({
+            successful: false,
+            message: 'Error adding manga',
+            data: err.message
+        });
+    }
+};
 const updateMangaDetail = async (req, res, next) => { //* This API updates manga data according to its oId (_id)
 
     let { id } = req.params;
@@ -302,6 +369,7 @@ export default {
     searchMangaById,
     deleteMangabyId,
     findAllManga,
+    addManga,
     updateMangaDetail,
     
 }

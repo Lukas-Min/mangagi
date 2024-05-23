@@ -4,7 +4,7 @@ import mangaController from '../controllers/manga_controller.js';
 const router = express.Router();
 
 //* POST
-
+router.post('/add', mangaController.addManga);
 
 //* GET
 router.get('/find/all', mangaController.findAllManga);
