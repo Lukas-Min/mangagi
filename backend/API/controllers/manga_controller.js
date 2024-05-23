@@ -184,7 +184,7 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
 }
 
 const addManga = async (req, res, next) => {
-    const { title, description, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+    const { title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
 
     try {
         if (!checkMandatoryField(title)) {
@@ -226,6 +226,7 @@ const addManga = async (req, res, next) => {
         const newManga = new MangaModel({
             title,
             description,
+            chapters,
             genre,
             manga_status,
             manga_state,
