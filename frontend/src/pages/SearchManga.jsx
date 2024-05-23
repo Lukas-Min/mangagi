@@ -24,9 +24,41 @@ const SearchManga = () => {
                     }
                 });
 
-               
+                const coverArtId = response.data.data
+                .map(manga => manga.relationships)
+                .flat() // Flatten the array of arrays
+                .filter(relationship => relationship.type === "cover_art")
+                .map(relationship => relationship.id);
 
-                setMangaResults(response.data.data);
+                const imageRequests = coverArtId.map(coverArtId => {
+                    const imageUrl = `https://api.mangadex.org/cover/${coverArtId}`;
+
+                    return axios.get(imageUrl);
+                });
+
+                const imgFileNameResponse = await Promise.all(imageRequests)
+                .then(responses => {
+                    return responses.map(response => response.data.data.attributes.fileName);
+                });
+
+                const combinedData = response.data.data.map((manga, index) => ({
+                    ...manga,
+                    fileName: imgFileNameResponse[index]
+                }));
+
+                // console.log(combinedData);
+        
+                const mangaData = combinedData.map(item => ({
+                    id: item.id,
+                    name: item.attributes.title.en,
+                    fileName: item.fileName
+                }));
+
+                // console.log("Manga names:");
+                // mangaData.forEach(manga => {
+                //     console.log(manga.fileName);
+                // });
+                setMangaResults(mangaData);
                 setHasSearched(true);
 
                 
@@ -39,9 +71,10 @@ const SearchManga = () => {
 
         fetchData();
     }, [mangaInfo]);
-
     return (
-        <div className="max-w-md mx-auto">
+        
+        <div className="max-w-md mx-auto mt-20">
+            <h1 className='text-center font-extrabold text-4xl mb-6'>MangaGing Search Bar</h1>
             <form onSubmit={(e) => e.preventDefault()}>   
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div className="relative">
@@ -60,32 +93,34 @@ const SearchManga = () => {
                         placeholder="Manga Title" 
                         required 
                     />
-                    {hasSearched && (
+                    {hasSearched && mangaResults.length > 0 && (
                         <div className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-600 max-h-60 overflow-y-auto">
-                            {mangaResults.length > 0 ? (
-                                mangaResults.slice(0, 5).map(manga => (
-                                    <a 
-                                        key={manga.id} 
-                                        href={`https://mangadex.org/title/${manga.id}`} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="block p-4 border-b border-gray-200 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700"
-                                    >
-                                        <div className="flex items-center">
-                                            <img src={manga.attributes.posterImage?.medium} alt={manga.attributes.title.en} className="w-10 h-10 rounded-lg mr-4"/>
-                                            <span className="text-gray-900 dark:text-white">{manga.attributes.title.en}</span>
-                                        </div>
-                                    </a>
-                                ))
-                            ) : (
-                                <div className="p-4 text-gray-900 dark:text-white">No manga found</div>
-                            )}
+                            {mangaResults.map(manga => (
+                                <a 
+                                    key={manga.id} 
+                                    href={`https://mangadex.org/title/${manga.id}`} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="block p-4 border-b border-gray-200 hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700"
+                                >
+                                    <div className="flex items-center">
+                                        <img src={`https://uploads.mangadex.org/covers/${manga.id}/${manga.fileName}`} alt={manga.name} className="w-30 h-40 rounded-lg mr-4"/>
+                                        <span className="text-gray-900 dark:text-white font-bold">{manga.name}</span>
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                    {hasSearched && mangaResults.length === 0 && (
+                        <div className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-600 max-h-60 overflow-y-auto">
+                            <div className="p-4 text-gray-900 dark:text-white font-bold">No manga found</div>
                         </div>
                     )}
                 </div>
             </form>
         </div>
     );
+    
 }
 
 export default SearchManga;
