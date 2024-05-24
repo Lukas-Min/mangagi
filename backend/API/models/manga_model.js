@@ -22,7 +22,7 @@ const MangaSchema = new Schema({
         trim: true
     },
     chapters: {
-        type: Number,
+        type: String,
         required: false,
         trim: true,
         default: "Unknown"
@@ -43,10 +43,10 @@ const MangaSchema = new Schema({
         trim: true
     },
     author: {
-        type: String,
+        type: [String],
         required: true,
         trim: true,
-        default: "Anonymous"
+        default: "Unknown"
     },
     year_published: {
         type: Number,

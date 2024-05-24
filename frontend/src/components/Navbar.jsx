@@ -10,6 +10,7 @@ const Navbar = () => {
         <Link to={"/about"}>About</Link>
         <Link to={"/add-manga"}>Add Manga</Link>
         <Link to={"/edit-manga"}>Edit Manga</Link>
+        <Link to={"/view-manga"}>View Manga</Link>
       </div>
     </div>
   )

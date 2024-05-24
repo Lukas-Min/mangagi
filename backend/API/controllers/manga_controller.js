@@ -1,5 +1,5 @@
 //* THIS FILE CONTAINS THE APIs (custom and 3rd party)
-import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType } from '../../utils.js';
+import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType, checkNumberField } from '../../utils.js';
 import MangaModel from '../models/manga_model.js';
 
 const searchMangaById = async (req, res, next) => { //* This is a custom API that connects to MangaDex API
@@ -36,17 +36,38 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
 
         const mangaData = await response.json();
 
+        const chapterUrl = `https://api.mangadex.org/manga/${mangaId}/aggregate`;
+        const chapterResponse = await fetch(chapterUrl);
+        const chapterData = await chapterResponse.json();
+
+        const allChapters = Object.values(chapterData.volumes).map(volume => Object.values(volume.chapters)).flat();
+        const lastChapter = allChapters[allChapters.length - 1];
+
+        // console.log(`Total Chapter: ${lastChapter.chapter}`);
+
         const genreTags = mangaData.data.attributes.tags
             .filter(tag => tag.attributes.group === "genre")
             .map(tag => tag.attributes.name.en);
 
-        const author = mangaData.data.relationships
-            .filter(relationship => relationship.type === "author")
-            .map(relationship => relationship.id);
+        const authorsIds = mangaData.data.relationships
+        .filter(relationship => relationship.type === "author")
+        .map(relationship => relationship.id);
 
-        const authorUrl = `https://api.mangadex.org/author/${author}`;
-        const authorResponse = await fetch(authorUrl);
-        const authorData = await authorResponse.json();
+        // console.log(`Authors: ${authorsIds}`);
+
+        const authorPromises = authorsIds.map(async authorId => {
+            const authorUrl = `https://api.mangadex.org/author/${authorId}`;
+            const authorResponse = await fetch(authorUrl);
+            const authorData = await authorResponse.json();
+            return authorData;
+        });
+
+        const authorNamesArray = await Promise.all(authorPromises)
+        .then(responses => {
+            return responses.map(response => response.data.attributes.name);
+        });
+
+        // console.log(`Author name count: ${authorNamesArray.length}`);
 
         const mangaCover = mangaData.data.relationships
             .filter(relationship => relationship.type === "cover_art")
@@ -62,11 +83,12 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
             manga_id: mangaData.data.id,
             title: mangaData.data.attributes.title.en || mangaData.data.attributes.altTitles[2].en,
             description: mangaData.data.attributes.description.en,
+            chapters: lastChapter.chapter != "" || lastChapter.chapter != null ? lastChapter.chapter : "Unknown",
             genre: genreTags,
             manga_status: mangaData.data.attributes.status,
             manga_state: mangaData.data.attributes.state,
-            author: authorData.data.attributes.name,
-            year_published: mangaData.data.attributes.year != null ? mangaData.data.attributes.year : "",
+            author: authorNamesArray.length != 0 ? authorNamesArray : "Unkown",
+            year_published: mangaData.data.attributes.year != null ? mangaData.data.attributes.year : "Unknown",
             cover_art: coverArtData.data.attributes.fileName
         })
 
@@ -167,7 +189,7 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
         })
     }
 
-}
+};
 
 const addManga = async (req, res, next) => { //* This adds the manga data in the database
     const { title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
@@ -272,10 +294,11 @@ const viewDetailsByObjId = async (req, res, next) => { //* This fetches existing
     }
 };
 
+// TODO: Add chapters to request body.
 const updateMangaDetail = async (req, res, next) => { //* This API updates manga data according to its oId (_id)
 
     let { id } = req.params;
-    let { manga_id, title, description, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+    let { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
 
     try {
 
@@ -307,7 +330,16 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
             })
         }
 
-        if (!checkMandatoryArrayField([genre])) {
+        if(!checkStringType(chapters))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga id is not of string data type."
+            })
+        }
+
+        if(!checkMandatoryArrayField([genre]))
+        {
             return res.status(400).send({
                 successful: false,
                 message: "Genre is not defined."
@@ -328,7 +360,24 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
             })
         }
 
-        if (!checkStringType(cover_art)) {
+        if(!checkMandatoryArrayField([author]))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Genre is not defined."
+            })
+        }
+
+        if(!checkNumberField(year_published))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Year published is not of number data type."
+            })
+        }
+
+        if(!checkStringType(cover_art))
+        {
             return res.status(400).send({
                 successful: false,
                 message: "Cover art is not of string data type."
@@ -340,6 +389,7 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
                 manga_id,
                 title,
                 description,
+                chapters,
                 genre,
                 manga_status,
                 manga_state,
@@ -373,7 +423,7 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
         })
     }
 
-}
+};
 
 export default {
     searchMangaById,
