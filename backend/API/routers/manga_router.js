@@ -9,6 +9,8 @@ router.post('/add', mangaController.addManga);
 //* GET
 router.get('/find/all', mangaController.findAllManga);
 router.get('/:mangaId', mangaController.searchMangaById);
+router.get('/find/:id', mangaController.viewDetailsByObjId);
+
 
 
 //* PUT
