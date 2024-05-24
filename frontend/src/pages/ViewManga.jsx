@@ -58,7 +58,7 @@ const ViewManga = (Title) => {
           </div>
         </div>
         <div className="grow-0">
-          <div className="border-4 border-red-300 w-96 h-128 my-24 mx-24"></div>
+          <div className="border-4 border-red-300 w-72 h-128 my-24 mx-24"></div>
         </div>
       </div>
     </section>
