@@ -1,5 +1,5 @@
 //* THIS FILE CONTAINS THE APIs (custom and 3rd party)
-import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType } from '../../utils.js';
+import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType, checkNumberField } from '../../utils.js';
 import MangaModel from '../models/manga_model.js';
 
 const searchMangaById = async (req, res, next) => { //* This is a custom API that connects to MangaDex API
@@ -203,7 +203,7 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
         })
     }
 
-}
+};
 
 const addManga = async (req, res, next) => {
     const { title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
@@ -273,10 +273,12 @@ const addManga = async (req, res, next) => {
         });
     }
 };
+
+// TODO: Add chapters to request body.
 const updateMangaDetail = async (req, res, next) => { //* This API updates manga data according to its oId (_id)
 
     let { id } = req.params;
-    let { manga_id, title, description, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+    let { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
 
     try
     {
@@ -313,6 +315,14 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
             })
         }
 
+        if(!checkStringType(chapters))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga id is not of string data type."
+            })
+        }
+
         if(!checkMandatoryArrayField([genre]))
         {
             return res.status(400).send({
@@ -337,6 +347,22 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
             })
         }
 
+        if(!checkMandatoryArrayField([author]))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Genre is not defined."
+            })
+        }
+
+        if(!checkNumberField(year_published))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Year published is not of number data type."
+            })
+        }
+
         if(!checkStringType(cover_art))
         {
             return res.status(400).send({
@@ -350,6 +376,7 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
                 manga_id,
                 title,
                 description,
+                chapters,
                 genre,
                 manga_status,
                 manga_state,
@@ -385,7 +412,7 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
         })
     }
 
-}
+};
 
 export default { 
     searchMangaById,
