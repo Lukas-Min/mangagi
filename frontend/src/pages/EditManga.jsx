@@ -4,12 +4,12 @@ const EditManga = () => {
   return (
     <section className="">
       <div className="flex justify-center">
-        <h1 className="sm:text-4xl text-2xl font-bold my-6 text-center">
+        <h1 className="text-4xl font-bold my-6 text-center">
           Edit Manga
         </h1>
       </div>
-      <div className="flex justify-center">
-        <div className="border-4 border-red-300 w-150 h-150 rounded-lg bg-raisin mb-14">
+      <div className="flex flex-col justify-center lg:flex-row lg:items-center lg:justify-center lg:pb-11 md:justify-center md: items-center px-8">
+        <div className="border-4 border-red-300 md:w-160 h-150 rounded-lg bg-raisin mb-14 lg:mb-0 lg:mr-14 lg:items-center lg:justify-center sm:items-center sm:justify-center">
           <div className="flex justify-right px-7 pt-7">
             <h3 className="italic">Title:</h3>
           </div>
@@ -71,10 +71,10 @@ const EditManga = () => {
           <div className="flex justify-right px-7 pt-3">
             <h3 className="italic w-full">Description:</h3>
           </div>
-          <div className="flex justify-right px-7 text-pretty ">
-            <input
+          <div className="flex justify-right px-7">
+            <textarea
               type="text"
-            class="p-1 inline-block rounded-md bg-rose border text-licorice w-full h-max"
+            class="p-1 inline-block rounded-md bg-rose border text-licorice w-full h-32 overflow-y-auto resize-none"
               placeholder="Enter Description.."
             />
           </div>
@@ -84,7 +84,7 @@ const EditManga = () => {
             </button>
           </div>
         </div>
-        <div className="border-4 border-red-300 w-96 h-150 rounded-lg ms-14 bg-raisin"></div>
+        <div className="border-4 border-red-300 w-96 h-150 rounded-lg lg:ms-1 md:ms-0 bg-raisin lg:w-96 md:w-96 mb-8 lg:mb-0"></div>
       </div>
     </section>
   );
