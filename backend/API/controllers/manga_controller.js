@@ -40,17 +40,38 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
 
         const mangaData = await response.json();
 
+        const chapterUrl = `https://api.mangadex.org/manga/${mangaId}/aggregate`;
+        const chapterResponse = await fetch(chapterUrl);
+        const chapterData = await chapterResponse.json();
+
+        const allChapters = Object.values(chapterData.volumes).map(volume => Object.values(volume.chapters)).flat();
+        const lastChapter = allChapters[allChapters.length - 1];
+
+        // console.log(`Total Chapter: ${lastChapter.chapter}`);
+
         const genreTags = mangaData.data.attributes.tags
         .filter(tag => tag.attributes.group === "genre")
         .map(tag => tag.attributes.name.en);
 
-        const author = mangaData.data.relationships
+        const authorsIds = mangaData.data.relationships
         .filter(relationship => relationship.type === "author")
         .map(relationship => relationship.id);
 
-        const authorUrl = `https://api.mangadex.org/author/${author}`;
-        const authorResponse = await fetch(authorUrl);
-        const authorData = await authorResponse.json();
+        // console.log(`Authors: ${authorsIds}`);
+
+        const authorPromises = authorsIds.map(async authorId => {
+            const authorUrl = `https://api.mangadex.org/author/${authorId}`;
+            const authorResponse = await fetch(authorUrl);
+            const authorData = await authorResponse.json();
+            return authorData;
+        });
+
+        const authorNamesArray = await Promise.all(authorPromises)
+        .then(responses => {
+            return responses.map(response => response.data.attributes.name);
+        });
+
+        // console.log(`Author name count: ${authorNamesArray.length}`);
 
         const mangaCover = mangaData.data.relationships
         .filter(relationship => relationship.type === "cover_art")
@@ -66,11 +87,12 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
             manga_id: mangaData.data.id,
             title: mangaData.data.attributes.title.en || mangaData.data.attributes.altTitles[2].en,
             description: mangaData.data.attributes.description.en,
+            chapters: lastChapter.chapter != "" || lastChapter.chapter != null ? lastChapter.chapter : "Unknown",
             genre: genreTags,
             manga_status: mangaData.data.attributes.status,
             manga_state: mangaData.data.attributes.state,
-            author: authorData.data.attributes.name,
-            year_published: mangaData.data.attributes.year != null ? mangaData.data.attributes.year : "",
+            author: authorNamesArray.length != 0 ? authorNamesArray : "Unkown",
+            year_published: mangaData.data.attributes.year != null ? mangaData.data.attributes.year : "Unknown",
             cover_art: coverArtData.data.attributes.fileName
         })
 
