@@ -1,14 +1,18 @@
-// import React from 'react';
+import React from 'react';
+import MangaCover from "../components/MangaCover";
 
 const Home = () => {
-    return (
-      <div className='mb-20'>
-          <h1 className='sm:text-4xl text-2xl font-bold my-6 text-gray-900'>
-              Hello Bai
-          </h1>
+  return (
+    <div className="container mx-auto p-4 py-11">
+      <div className="grid gap-11 justify-center" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' }}>
+        {Array.from({ length: 12 }).map((_, index) => (
+          <div key={index} className="flex justify-center">
+            <MangaCover index={index} />
+          </div>
+        ))}
       </div>
-    )
-  }
-  
-  export default Home;
-  
+    </div>
+  )
+}
+
+export default Home;
