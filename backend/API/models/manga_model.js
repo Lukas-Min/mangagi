@@ -43,7 +43,7 @@ const MangaSchema = new Schema({
         trim: true
     },
     author: {
-        type: String,
+        type: [String],
         required: true,
         trim: true,
         default: "Unknown"

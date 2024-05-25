@@ -1,24 +1,21 @@
 //* THIS FILE CONTAINS THE APIs (custom and 3rd party)
-import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType } from '../../utils.js';
+import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType, checkNumberField } from '../../utils.js';
 import MangaModel from '../models/manga_model.js';
 
 const searchMangaById = async (req, res, next) => { //* This is a custom API that connects to MangaDex API
 
     let { mangaId } = req.params;
 
-    try
-    {
+    try {
 
-        if (!checkMandatoryField(mangaId)) 
-        {
+        if (!checkMandatoryField(mangaId)) {
             return res.status(400).send({
                 successful: false,
                 message: "Manga id is not defined."
             })
         }
 
-        if (!checkStringField(mangaId))
-        {
+        if (!checkStringField(mangaId)) {
 
             return res.status(400).send({
                 successful: false,
@@ -30,8 +27,7 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
         const mangaUrl = `https://api.mangadex.org/manga/${mangaId}`;
         const response = await fetch(mangaUrl);
 
-        if (!response.ok)
-        {
+        if (!response.ok) {
             return res.status(response.status).send({
                 successful: false,
                 message: "Failed to fetch manga data. Id does not exist"
@@ -50,8 +46,8 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
         // console.log(`Total Chapter: ${lastChapter.chapter}`);
 
         const genreTags = mangaData.data.attributes.tags
-        .filter(tag => tag.attributes.group === "genre")
-        .map(tag => tag.attributes.name.en);
+            .filter(tag => tag.attributes.group === "genre")
+            .map(tag => tag.attributes.name.en);
 
         const authorsIds = mangaData.data.relationships
         .filter(relationship => relationship.type === "author")
@@ -74,8 +70,8 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
         // console.log(`Author name count: ${authorNamesArray.length}`);
 
         const mangaCover = mangaData.data.relationships
-        .filter(relationship => relationship.type === "cover_art")
-        .map(relationship => relationship.id);
+            .filter(relationship => relationship.type === "cover_art")
+            .map(relationship => relationship.id);
 
         const coverArtUrl = `https://api.mangadex.org/cover/${mangaCover}`
         const coverArtResponse = await fetch(coverArtUrl);
@@ -97,8 +93,7 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
         })
 
     }
-    catch (err)
-    {
+    catch (err) {
         return res.status(500).send({
             successful: false,
             message: 'Error fetching manga data',
@@ -113,27 +108,23 @@ const deleteMangabyId = async (req, res, next) => { //* This API deletes manga d
 
     let { id } = req.params;
 
-    try
-    {
+    try {
 
-        if (!checkMandatoryField(id)) 
-        {
+        if (!checkMandatoryField(id)) {
             return res.status(400).send({
                 successful: false,
                 message: "Object id is not defined."
             })
         }
 
-        if (!containsCharacter(id, '-'))
-        {
+        if (!containsCharacter(id, '-')) {
             return res.status(400).send({
                 successful: false,
                 message: "Manga id is not allowed."
             })
         }
 
-        if (!checkStringField(id))
-        {
+        if (!checkStringField(id)) {
 
             return res.status(400).send({
                 successful: false,
@@ -146,8 +137,7 @@ const deleteMangabyId = async (req, res, next) => { //* This API deletes manga d
         const deleteManga = await MangaModel.findByIdAndDelete(id);
 
 
-        if(!deleteManga)
-        {
+        if (!deleteManga) {
 
             return res.status(400).send({
                 successful: false,
@@ -162,8 +152,7 @@ const deleteMangabyId = async (req, res, next) => { //* This API deletes manga d
         })
 
     }
-    catch (err)
-    {
+    catch (err) {
         return res.status(500).send({
             successful: false,
             message: 'Error deleting manga data',
@@ -175,12 +164,10 @@ const deleteMangabyId = async (req, res, next) => { //* This API deletes manga d
 
 const findAllManga = async (req, res, next) => { //* This fetches all existing manga data in the database
 
-    try 
-    {
+    try {
         const allManga = await MangaModel.find();
 
-        if (allManga.length == 0) 
-        {
+        if (allManga.length == 0) {
             return res.status(404).send({
                 successful: false,
                 message: 'No manga data found'
@@ -193,9 +180,8 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
             data: allManga
         })
 
-    } 
-    catch (err) 
-    {
+    }
+    catch (err) {
         return res.status(500).send({
             successful: false,
             message: 'Error finding all manga data',
@@ -203,9 +189,9 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
         })
     }
 
-}
+};
 
-const addManga = async (req, res, next) => {
+const addManga = async (req, res, next) => { //* This adds the manga data in the database
     const { title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
 
     try {
@@ -272,44 +258,83 @@ const addManga = async (req, res, next) => {
             data: err.message
         });
     }
+}
+
+const viewDetailsByObjId = async (req, res, next) => { //* This fetches existing manga data in the local database
+    const { id } = req.params;
+
+    try {
+        if (!id) {
+            return res.status(400).send({
+                successful: false,
+                message: "Object id is not defined."
+            });
+        }
+
+        const manga = await MangaModel.findById(id);
+
+        if (!manga) {
+            return res.status(404).send({
+                successful: false,
+                message: "Manga data does not exist."
+            });
+        }
+
+        return res.status(200).send({
+            successful: true,
+            message: "Manga data fetched successfully.",
+            data: manga
+        });
+    } catch (error) {
+        return res.status(500).send({
+            successful: false,
+            message: "An error occurred while fetching manga data.",
+            error: error.message
+        });
+    }
 };
+
+// TODO: Add chapters to request body.
 const updateMangaDetail = async (req, res, next) => { //* This API updates manga data according to its oId (_id)
 
     let { id } = req.params;
-    let { manga_id, title, description, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+    let { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
 
-    try
-    {
+    try {
 
-        if(!checkMandatoryField(id))
-        {
+        if (!checkMandatoryField(id)) {
             return res.status(400).send({
                 successful: false,
                 message: "Id is not defined."
             })
         }
 
-        if(!checkStringType(manga_id))
-        {
+        if (!checkStringType(manga_id)) {
             return res.status(400).send({
                 successful: false,
                 message: "Manga id is not of string data type."
             })
         }
 
-        if(!checkMandatoryField(title))
-        {
+        if (!checkMandatoryField(title)) {
             return res.status(400).send({
                 successful: false,
                 message: "Title is not defined."
             })
         }
 
-        if(!checkMandatoryField(description))
-        {
+        if (!checkMandatoryField(description)) {
             return res.status(400).send({
                 successful: false,
                 message: "Description is not defined."
+            })
+        }
+
+        if(!checkStringType(chapters))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga id is not of string data type."
             })
         }
 
@@ -321,19 +346,33 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
             })
         }
 
-        if(!checkMandatoryField(manga_status))
-        {
+        if (!checkMandatoryField(manga_status)) {
             return res.status(400).send({
                 successful: false,
                 message: "Manga status is not defined."
             })
         }
 
-        if(!checkMandatoryField(manga_state))
-        {
+        if (!checkMandatoryField(manga_state)) {
             return res.status(400).send({
                 successful: false,
                 message: "Manga state is not defined."
+            })
+        }
+
+        if(!checkMandatoryArrayField([author]))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Genre is not defined."
+            })
+        }
+
+        if(!checkNumberField(year_published))
+        {
+            return res.status(400).send({
+                successful: false,
+                message: "Year published is not of number data type."
             })
         }
 
@@ -344,12 +383,13 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
                 message: "Cover art is not of string data type."
             })
         }
-    
+
         const updateManga = await MangaModel.findByIdAndUpdate(id, {
             $set: {
                 manga_id,
                 title,
                 description,
+                chapters,
                 genre,
                 manga_status,
                 manga_state,
@@ -361,8 +401,7 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
             $inc: { __v: 1 }
         });
 
-        if(!updateManga)
-        {
+        if (!updateManga) {
             return res.status(400).send({
                 successful: false,
                 message: "Error updating manga data."
@@ -376,8 +415,7 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
 
 
     }
-    catch (err)
-    {
+    catch (err) {
         return res.status(500).send({
             successful: false,
             message: 'Error updating manga data',
@@ -385,13 +423,13 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
         })
     }
 
-}
+};
 
-export default { 
+export default {
     searchMangaById,
     deleteMangabyId,
     findAllManga,
     addManga,
     updateMangaDetail,
-    
+    viewDetailsByObjId
 }
