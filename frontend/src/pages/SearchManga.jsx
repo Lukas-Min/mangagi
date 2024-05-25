@@ -73,7 +73,7 @@ const SearchManga = () => {
     }, [mangaInfo]);
     return (
 
-        <div className="max-w-md mx-auto mt-[30vh]">
+        <div className="max-w-md mx-auto mt-[25vh]">
             <h1 className='text-center font-extrabold text-4xl mb-6 text-nowrap'>MangaGing Search Bar</h1>
             <form onSubmit={(e) => e.preventDefault()}>
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
