@@ -5,4 +5,5 @@
 body {
   background-color: #191516;
   color: #FFD9DA;
+  overflow-y: scroll;
 }
