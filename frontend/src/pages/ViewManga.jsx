@@ -3,16 +3,15 @@ import React from "react";
 const ViewManga = (Title) => {
   return (
     <section className="mx-24">
-      <div className="flex">
+      <div className="flex flex-col-reverse xl:flex-row justify-center items-center">
         <div className="grow-0 my-11 mx-10">
-          <div className="flex h-16 mb-2">
-            <h1 className="sm:text-4xl text-2xl font-bold my-6">Title</h1>
-            <div className="sm:w-150 h-10"></div>
-            <h1 className="sm:text-xl italic text-m my-6 pt-3 text-right">
+          <div className="flex flex-col h-16 mb-2 xl:justify-between xl:flex-row">
+            <h1 className="text-3xl font-bold xl:my-6 text-center xl:text-left">Title</h1>
+            <h1 className="italic xl:my-6 xl:pt-3 xl:text-right text-center">
               Author
             </h1>
           </div>
-          <div className="flex mb-6">
+          <div className="flex mt-6 mb-6 justify-center items-center xl:items-start xl:justify-start">
             <div className="w-36 h-50 p-2 py-2 rounded-xl bg-raisin">
               <h1 className="text-sm text-center">Date Published</h1>
             </div>
@@ -33,9 +32,9 @@ const ViewManga = (Title) => {
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
           <div>
-            <h1 className="sm:text-xl text-2xl font-bold mt-6 mb-3">Tags</h1>
+            <h1 className="sm:text-xl text-2xl font-bold mt-6 mb-3 text-center xl:text-left">Tags</h1>
           </div>
-          <div className="flex">
+          <div className="flex justify-center items-center xl:justify-start xl:items-center">
             <div className="inline-block p-2 py-2 rounded-xl bg-blush text-licorice me-3">
               <h1 className="text-sm text-center font-bold">Fluff</h1>
             </div>
@@ -48,7 +47,7 @@ const ViewManga = (Title) => {
               </h1>
             </div>
           </div>
-          <div className="flex mt-6">
+          <div className="flex mt-6 justify-center items-center xl:justify-start xl:items-center">
             <button className="h-50 p-2 py-2 rounded-3xl bg-amaranth w-20 me-3">
               <h1 className="text-sm text-center font-bold">Edit</h1>
             </button>
@@ -58,7 +57,7 @@ const ViewManga = (Title) => {
           </div>
         </div>
         <div className="grow-0">
-          <div className="border-4 border-red-300 w-72 h-128 my-24 mx-24"></div>
+          <div className="border-4 border-red-300 w-72 h-128 mt-24 xl:my-24 mx-24 rounded-lg"></div>
         </div>
       </div>
     </section>
