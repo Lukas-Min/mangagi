@@ -21,7 +21,7 @@ class Navbar extends React.Component {
       <nav className="border-b-2 border-b-blush p-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <div>
-            <Link to={"/"}><img className='h-auto w-20 sm:w-24 md:w-28 lg:w-36' src="/img/logo/mangagi.png" alt="Mangagi Logo" /></Link>
+            <Link to={"/"}><img className='h-auto w-24 md:w-28 lg:w-36' src="/img/logo/mangagi.png" alt="Mangagi Logo" /></Link>
           </div>
           <div className="hidden lg:block">
             <ul className="flex space-x-4 text-md">
