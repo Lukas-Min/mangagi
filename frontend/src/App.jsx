@@ -12,6 +12,7 @@ import ViewManga from './pages/ViewManga';
 // COMPONENTS
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Error404 from './pages/Error404';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/edit-manga" element={<EditManga />} />
             <Route path="/view-manga" element={<ViewManga />} />
             <Route path="/search-manga" element={<SearchManga />} />
+            <Route path="/*" element={<Error404 />} />
           </Routes>
         </div>
         <Footer />
