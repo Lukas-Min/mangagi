@@ -35,10 +35,10 @@ const MangaCover = () => {
                                 alt={manga.title ? manga.title : `Image ${index + 1}`}
                                 className="object-cover w-full h-full xs:h-[30vh]"
                             />
-                            <div className="absolute bottom-0 left-0 w-full p-2 text-white text-base xs:text-xs sm:text-sm lg:text-base pt-[70%] [text-shadow:_1px_1px_1px_rgb(0_0_0_/_60%)] bg-gradient-to-t from-black to-transparent">
+                            <div className="absolute bottom-0 left-0 w-full p-2 text-white pt-[70%] [text-shadow:_1px_1px_1px_rgb(0_0_0_/_60%)] bg-gradient-to-t from-black to-transparent">
                                 <h3 className="font-bold mb-1">{manga.title ? manga.title : 'Title not available'}</h3>
                             </div>
-                            <div className="absolute top-0 left-0 w-full p-2 text-white text-base xs:text-xs sm:text-sm lg:text-base [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] ">
+                            <div className="absolute top-0 left-0 w-full p-2 text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] ">
                                 <span className='bg-blush rounded-lg p-1 px-3 font-bold'>{manga.chapters ? `${manga.chapters}` : 'Chapters not available'}</span>
                             </div>
                         </Link>
