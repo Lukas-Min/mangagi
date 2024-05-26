@@ -6,4 +6,7 @@ body {
   background-color: #191516;
   color: #FFD9DA;
   overflow-y: scroll;
+
+  /** Responsiveness for text */
+  @apply text-base xs:text-xs sm:text-sm lg:text-base
 }
