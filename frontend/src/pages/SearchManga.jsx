@@ -94,7 +94,7 @@ const SearchManga = () => {
                         required
                     />
                     {hasSearched && mangaResults.length > 0 && (
-                        <div className="absolute z-10 w-full mt-2 bg-raisin border border-blush rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                        <div className="absolute z-20 w-full mt-2 bg-raisin border border-blush rounded-lg shadow-lg max-h-60 overflow-y-auto">
                             {mangaResults.map(manga => (
                                 <a
                                     key={manga.id}
