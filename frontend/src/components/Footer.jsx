@@ -26,7 +26,7 @@ const Footer = () => {
           </ul>
         </div>
         <hr className="my-6 border-blush mx-auto lg:my-8" />
-        <span className="block text-center ">© 2024 <Link to={'/mangagi'}><span className='font-bold'>Mangagi™</span></Link> by Mangagu. All Rights Reserved.</span>
+        <span className="block text-center ">© 2024 <Link to={'/mangagi'}><span className='font-bold'>Mangagi™</span></Link> by Mangagu | All Rights Reserved.</span>
       </div>
     </footer>
 
