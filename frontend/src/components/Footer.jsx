@@ -6,7 +6,7 @@ const Footer = () => {
 
 
     <footer className="border-t-2 border-t-blush bg-licorice mt-10 z-10">
-      <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8 text-xs sm:text-sm md:text-base">
+      <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="flex items-center justify-between">
           <Link to={'/'}>
             <div className="flex items-center mb-0 space-x-3 rtl:space-x-reverse">
