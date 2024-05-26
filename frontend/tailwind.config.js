@@ -13,7 +13,9 @@ export default {
         'blush': '#EB638B',
         'rose': '#FFD9DA',
       },
-
+      screens: {
+        'xs': '390px'
+      },
       spacing: {
         '128': '27rem',
         '150': '35rem',
