@@ -25,7 +25,8 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/add-manga" element={<AddManga />} />
             <Route path="/edit-manga" element={<EditManga />} />
-            <Route path="/view-manga" element={<ViewManga />} />
+            <Route path="/view-manga/:oid" element={<ViewManga />} />
+            <Route path="/view-manga/:mangaid" element={<ViewManga />} />
             <Route path="/search-manga" element={<SearchManga />} />
             <Route path="/*" element={<Error404 />} />
           </Routes>
