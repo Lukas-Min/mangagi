@@ -33,7 +33,7 @@ const MangaCover = () => {
                             <img
                                 src={manga.cover_art ? `https://uploads.mangadex.org/covers/${manga.manga_id}/${manga.cover_art}` : `https://via.placeholder.com/400x500?text=No+Image`}
                                 alt={manga.title ? manga.title : `Image ${index + 1}`}
-                                className="object-cover w-full h-full xs:h-[30vh]"
+                                className="object-cover w-full h-full"
                             />
                             <div className="absolute bottom-0 left-0 w-full p-2 text-white pt-[70%] [text-shadow:_1px_1px_1px_rgb(0_0_0_/_60%)] bg-gradient-to-t from-black to-transparent">
                                 <h3 className="font-bold mb-1">{manga.title ? manga.title : 'Title not available'}</h3>
