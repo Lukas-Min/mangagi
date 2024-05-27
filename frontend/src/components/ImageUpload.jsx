@@ -21,11 +21,13 @@ const ImageUpload = () => {
   return (
     <>
       <label htmlFor="MangaImage" className="relative cursor-pointer group w-full h-full bg-raisin">
-        <div className="rounded-lg flex items-center justify-center w-full h-[40vh] lg:h-full hover:bg-black hover:bg-opacity-30 transition-colors duration-300">
+        <div className="rounded-lg w-full h-[40vh] lg:h-full flex flex-col items-center justify-center hover:bg-black hover:bg-opacity-30 transition-colors duration-300">
+          <div className="absolute text-lg top-4 left-0 right-0 text-center text-rose font-bold z-10">Manga Cover</div>
+
+          {/* Uploaded image or upload prompt */}
           {imageSrc ? (
             <div className="w-full h-full relative">
-              <img id="the-picture" src={imageSrc} alt="Uploaded" className="w-full h-full object-contain lg:object-cover rounded"
-              />
+              <img id="the-picture" src={imageSrc} alt="Uploaded" className="w-full h-full object-contain lg:object-cover rounded" />
               <button type="button" onMouseDown={removeImage} className="absolute top-2 right-2 m-2 bg-amaranth text-rose font-bold px-3 py-1 rounded-lg hover:bg-blush transition-colors z-10">
                 Remove
               </button>
@@ -42,6 +44,8 @@ const ImageUpload = () => {
       </label>
       <input id="MangaImage" className="photo-upload hidden" type="file" accept="image/jpg, image/jpeg, image/png, image/gif" onChange={handleImageChange} />
     </>
+
+
   );
 };
 
