@@ -1,53 +1,54 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 const MangaCover = () => {
-    const [mangaData, setMangaData] = useState([]);
-
-    useEffect(() => {
-        const fetchMangaData = async () => {
-            try {
-                const result = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/all`);
-                const body = await result.json();
-                console.log("Response from server:", body);
-                if (body.successful && body.data.length > 0) {
-                    setMangaData(body.data);
-                } else {
-                    console.log("No manga data found");
-                    setMangaData([]);
-                }
-            } catch (error) {
-                console.error("Error fetching manga data:", error);
-                setMangaData([]);
+    const { data: mangaData, isLoading, error } = useQuery({
+        queryFn: async () => {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/all`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        };
-        fetchMangaData();
-    }, []);
+            const data = await response.json();
+            return data;
+        },
+        queryKey: ['mangaData'],
+    });
+
+    if (isLoading) return <h1>Loading...</h1>; // U can use this to create a loader...
+    if (error) return <h1>Error: {error.message}</h1>; // U can use this to return a specific error if fetching data from db using the API failed.
+
 
     return (
-        <>
-            <div className='flex justify-center'>
-                <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-x-4 gap-y-4'>
-                    {Array.isArray(mangaData) && mangaData.map((manga, index) => (
-                        <Link key={index} to={`/view-manga/${manga.id}`} className="border border-rose rounded-lg overflow-hidden relative">
-                            <img
-                                src={manga.cover_art ? `https://uploads.mangadex.org/covers/${manga.manga_id}/${manga.cover_art}` : `https://via.placeholder.com/400x500?text=No+Image`}
-                                alt={manga.title ? manga.title : `Image ${index + 1}`}
-                                className="object-cover w-full h-full xs:h-[30vh]"
-                            />
-                            <div className="absolute bottom-0 left-0 w-full p-2 text-white pt-[70%] [text-shadow:_1px_1px_1px_rgb(0_0_0_/_60%)] bg-gradient-to-t from-black to-transparent">
-                                <h3 className="font-bold mb-1">{manga.title ? manga.title : 'Title not available'}</h3>
-                            </div>
-                            <div className="absolute top-0 left-0 w-full p-2 text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] ">
-                                <span className='bg-blush rounded-lg p-1 px-3 font-bold'>{manga.chapters ? `${manga.chapters}` : 'Chapters not available'}</span>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>
-        </>
+       
+        <div className='flex justify-center'>
+            {mangaData.data.length === 0 ? ( // ? To see the message, change the condition to -> mangaData.data.length !== 0
+                <h1>No Manga Found in DB</h1> // TODO: fix the design and layout of this message. Kayo na bahala kung anong itsura.
+            ) : (
+                <>
+                
+                    <h1>Your Manga List</h1> {/* //TODO: fix the design and layout of this caption at the top just before displaying the manga covers */}
+                    <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-x-4 gap-y-4'>
+                        {mangaData.data.map((manga, index) => (
+                            <Link key={index} to={`/view-manga/${manga.id}`} className="border border-rose rounded-lg overflow-hidden relative">
+                                <img
+                                    src={manga.cover_art ? `https://uploads.mangadex.org/covers/${manga.manga_id}/${manga.cover_art}` : `https://via.placeholder.com/400x500?text=No+Image`}
+                                    alt={manga.title ? manga.title : `Image ${index + 1}`}
+                                    className="object-cover w-full h-full xs:h-[30vh]"
+                                />
+                                <div className="absolute bottom-0 left-0 w-full p-2 text-white pt-[70%] bg-gradient-to-t from-black to-transparent">
+                                    <h3 className="font-bold mb-1">{manga.title ? manga.title : 'Title not available'}</h3>
+                                </div>
+                                <div className="absolute top-0 left-0 w-full p-2 text-white">
+                                    <span className='bg-blush rounded-lg p-1 px-3 font-bold'>{manga.chapters ? `${manga.chapters}` : 'Chapters not available'}</span>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </>
+            )}
+        </div>
+        
     );
-
 
 }
 
