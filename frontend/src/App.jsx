@@ -1,4 +1,5 @@
-import React from 'react';
+// import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // PAGES
@@ -14,26 +15,30 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Error404 from './pages/Error404';
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <div className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/add-manga" element={<AddManga />} />
-            <Route path="/edit-manga" element={<EditManga />} />
-            <Route path="/view-manga/:oid" element={<ViewManga />} />
-            <Route path="/view-manga/:mangaid" element={<ViewManga />} />
-            <Route path="/search-manga" element={<SearchManga />} />
-            <Route path="/*" element={<Error404 />} />
-          </Routes>
-        </div>
-        <Footer />
-      </div>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+        <Router>
+            <div className="flex flex-col min-h-screen">
+                <Navbar />
+                <div className="flex-grow">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/add-manga" element={<AddManga />} />
+                        <Route path="/edit-manga" element={<EditManga />} />
+                        <Route path="/view-manga/:oid" element={<ViewManga />} />
+                        <Route path="/view-manga/:mangaid" element={<ViewManga />} />
+                        <Route path="/search-manga" element={<SearchManga />} />
+                        <Route path="/*" element={<Error404 />} />
+                    </Routes>
+                </div>
+                <Footer />
+            </div>
+        </Router>
+    </QueryClientProvider>
   );
 };
 
