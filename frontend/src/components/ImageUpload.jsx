@@ -22,7 +22,7 @@ const ImageUpload = () => {
     <>
       <label htmlFor="MangaImage" className="relative cursor-pointer group w-full h-full bg-raisin">
         <div className="rounded-lg w-full h-[40vh] lg:h-full flex flex-col items-center justify-center hover:bg-black hover:bg-opacity-30 transition-colors duration-300">
-          <div className="absolute text-lg top-4 left-0 right-0 text-center text-rose font-bold z-10">Manga Cover</div>
+
 
           {/* Uploaded image or upload prompt */}
           {imageSrc ? (
@@ -36,9 +36,12 @@ const ImageUpload = () => {
               </div>
             </div>
           ) : (
-            <div className="text-lg flex items-center justify-center font-bold text-rose ">
-              Click to upload
-            </div>
+            <>
+              <div className="absolute text-lg top-4 left-0 right-0 text-center text-rose font-bold z-10">Manga Cover</div>
+              <div className="text-lg flex items-center justify-center font-bold text-rose ">
+                Click to upload
+              </div>
+            </>
           )}
         </div>
       </label>
