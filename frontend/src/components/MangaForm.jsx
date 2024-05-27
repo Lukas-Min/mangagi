@@ -76,7 +76,7 @@ const MangaForm = () => {
       </div>
       <div className="flex justify-center col-span-2 ">
         <button className="px-6 py-2 w-full rounded-lg bg-amaranth hover:bg-blush transition-colors text-white my-3 shadow-sm shadow-[rgba(0,0,0,0.31)]">
-          <h1 className="text-sm text-center font-bold">Edit</h1>
+          <h1 className="text-base text-center font-bold">Save</h1>
         </button>
       </div>
     </div>
