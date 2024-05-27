@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Error404 = () => {
   return (
-    <section className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+    <section className="absolute top-0 left-0 w-full h-full flex justify-center items-center px-10">
       <div className="mx-auto max-w-screen-sm text-center">
         <h1 className="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-blush">404</h1>
         <p className="mb-4 text-3xl tracking-tight font-bold text-amaranth md:text-4xl">Something's missing.</p>
