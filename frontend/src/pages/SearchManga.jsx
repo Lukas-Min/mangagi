@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const SearchManga = () => {
@@ -96,10 +97,8 @@ const SearchManga = () => {
                     {hasSearched && mangaResults.length > 0 && (
                         <div className="absolute z-30 w-full mt-2 bg-raisin border border-rose rounded-lg shadow-lg max-h-60 overflow-y-auto">
                             {mangaResults.map(manga => (
-                                <a
-                                    key={manga.id}
-                                    href={`https://mangadex.org/title/${manga.id}`}
-                                    target="_blank"
+                                <Link
+                                    key={manga} to={`/view-manga/${manga.id}`}
                                     rel="noopener noreferrer"
                                     className="block p-4 border-b border-amaranth hover:bg-amaranth"
                                 >
@@ -107,7 +106,7 @@ const SearchManga = () => {
                                         <img src={`https://uploads.mangadex.org/covers/${manga.id}/${manga.fileName}`} alt={manga.name} className="w-30 h-40 rounded-lg mr-4" />
                                         <span className="text-rose font-bold">{manga.name}</span>
                                     </div>
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     )}
