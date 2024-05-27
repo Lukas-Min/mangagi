@@ -19,21 +19,19 @@ const MangaCover = () => {
 
 
     return (
-       
+
         <div className='flex justify-center'>
             {mangaData.data.length === 0 ? ( // ? To see the message, change the condition to -> mangaData.data.length !== 0
                 <h1>No Manga Found in DB</h1> // TODO: fix the design and layout of this message. Kayo na bahala kung anong itsura.
             ) : (
                 <>
-                
-                    <h1>Your Manga List</h1> {/* //TODO: fix the design and layout of this caption at the top just before displaying the manga covers */}
                     <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-x-4 gap-y-4'>
                         {mangaData.data.map((manga, index) => (
-                            <Link key={index} to={`/view-manga/${manga.id}`} className="border border-rose rounded-lg overflow-hidden relative">
+                            <Link key={index} to={`/view-manga/${manga.id}`} className="border border-rose rounded-lg overflow-hidden relative transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
                                 <img
                                     src={manga.cover_art ? `https://uploads.mangadex.org/covers/${manga.manga_id}/${manga.cover_art}` : `https://via.placeholder.com/400x500?text=No+Image`}
                                     alt={manga.title ? manga.title : `Image ${index + 1}`}
-                                    className="object-cover w-full h-full xs:h-[30vh]"
+                                    className="object-cover w-full h-full"
                                 />
                                 <div className="absolute bottom-0 left-0 w-full p-2 text-white pt-[70%] bg-gradient-to-t from-black to-transparent">
                                     <h3 className="font-bold mb-1">{manga.title ? manga.title : 'Title not available'}</h3>
@@ -47,7 +45,7 @@ const MangaCover = () => {
                 </>
             )}
         </div>
-        
+
     );
 
 }

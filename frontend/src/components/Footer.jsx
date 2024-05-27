@@ -5,7 +5,7 @@ const Footer = () => {
   return (
 
 
-    <footer className="border-t-2 border-t-blush bg-licorice mt-10 z-10">
+    <footer className="border-t-2 border-t-blush bg-licorice mt-10 z-20">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="flex items-center justify-between">
           <Link to={'/'}>
@@ -21,12 +21,12 @@ const Footer = () => {
               <Link to={'/about'} className="hover:underline me-4 md:me-6">About</Link>
             </li>
             <li>
-              <Link to={'/error-404'} className="hover:underline me-4 md:me-6">Contact</Link>
+              <Link to={'/contact'} className="hover:underline me-4 md:me-6">Contact</Link>
             </li>
           </ul>
         </div>
         <hr className="my-6 border-blush mx-auto lg:my-8" />
-        <span className="block text-center ">© 2024 <Link to={'/mangagi'}><span className='font-bold'>Mangagi™</span></Link> by Mangagu. All Rights Reserved.</span>
+        <span className="block text-center ">© 2024 <Link to={'/mangagi'}><span className='font-bold'>Mangagi™</span></Link> by Mangagu | All Rights Reserved.</span>
       </div>
     </footer>
 

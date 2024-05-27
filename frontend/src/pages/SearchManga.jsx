@@ -89,12 +89,12 @@ const SearchManga = () => {
                         onChange={(e) => setMangaInfo(e.target.value)}
                         type="search"
                         id="default-search"
-                        className="block w-full p-4 ps-10 text-sm text-licorice border border-blush rounded-lg bg-gray-50 focus:ring-amaranth focus:border-amaranth"
+                        className="block w-full p-4 ps-10 text-sm text-licorice border border-rose rounded-lg bg-gray-50 focus:ring-amaranth focus:border-amaranth"
                         placeholder="Manga Title"
                         required
                     />
                     {hasSearched && mangaResults.length > 0 && (
-                        <div className="absolute z-10 w-full mt-2 bg-raisin border border-blush rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                        <div className="absolute z-30 w-full mt-2 bg-raisin border border-rose rounded-lg shadow-lg max-h-60 overflow-y-auto">
                             {mangaResults.map(manga => (
                                 <a
                                     key={manga.id}
@@ -112,7 +112,7 @@ const SearchManga = () => {
                         </div>
                     )}
                     {hasSearched && mangaResults.length === 0 && (
-                        <div className="absolute z-10 w-full mt-2 bg-white border border-blush rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                        <div className="absolute z-10 w-full mt-2 bg-white border border-rose rounded-lg shadow-lg max-h-60 overflow-y-auto">
                             <div className="p-4 text-rose font-bold">No manga found</div>
                         </div>
                     )}
