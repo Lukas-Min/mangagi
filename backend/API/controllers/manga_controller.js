@@ -39,9 +39,12 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
         const chapterUrl = `https://api.mangadex.org/manga/${mangaId}/aggregate`;
         const chapterResponse = await fetch(chapterUrl);
         const chapterData = await chapterResponse.json();
+        
+        
 
         const allChapters = Object.values(chapterData.volumes).map(volume => Object.values(volume.chapters)).flat();
         const lastChapter = allChapters[allChapters.length - 1];
+
 
         // console.log(`Total Chapter: ${lastChapter.chapter}`);
 
@@ -77,19 +80,23 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
         const coverArtResponse = await fetch(coverArtUrl);
         const coverArtData = await coverArtResponse.json();
 
-        return res.status(200).send({
-            successful: true,
-            message: "Manga data fetched successfully.",
+        const data = {
             manga_id: mangaData.data.id,
             title: mangaData.data.attributes.title.en || mangaData.data.attributes.altTitles[2].en,
             description: mangaData.data.attributes.description.en,
-            chapters: lastChapter.chapter != "" || lastChapter.chapter != null ? lastChapter.chapter : "Unknown",
+            chapters: lastChapter && (lastChapter.chapter != undefined && lastChapter.chapter != null && lastChapter.chapter != "") ? lastChapter.chapter : "Unknown",
             genre: genreTags,
             manga_status: mangaData.data.attributes.status,
             manga_state: mangaData.data.attributes.state,
             author: authorNamesArray.length != 0 ? authorNamesArray : "Unkown",
             year_published: mangaData.data.attributes.year != null ? mangaData.data.attributes.year : "Unknown",
             cover_art: coverArtData.data.attributes.fileName
+        }
+
+        return res.status(200).send({
+            successful: true,
+            message: "Manga data fetched successfully.",
+            data: data
         })
 
     }
