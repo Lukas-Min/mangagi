@@ -10,17 +10,8 @@ export const useViewMangaData = (id) => {
     return useQuery({
 
         queryFn: async () => {
-
-            let response;
-
-            if (isObjectId(id)) 
-            {
-                response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/${id}`);
-            } 
-            else 
-            {
-                response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/${id}`);
-            }
+            
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/${isObjectId(id) ? `find/${id}` : id}`);
 
             if (!response.ok) 
             {
@@ -105,4 +96,18 @@ export const useMangaSearch = (mangaInfo) => {
 };
 
 
+export const useViewAllMangaData = () => {
 
+    return useQuery({
+        queryFn: async () => {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/all`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data;
+        },
+        queryKey: ['mangaData'],
+    });
+    
+};
