@@ -26,7 +26,7 @@ const ViewManga = () => {
     if (error) return <h1>Error: {error.message}</h1>;
 
     return (
-        <section className="grid grid-cols-1  lg:grid-cols-3 gap-8  px-[10vw] lg:px-[15vw] pb-16">
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-x-8  px-[10vw] lg:px-[15vw] pb-16">
             <div className="col-span-1 lg:col-span-2 order-2 lg:order-1 flex flex-col justify-center items-center lg:items-start p-5">
                 <div className="w-full">
                     <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center lg:text-left py-2">{mangaInfo.data.title}</h1>
