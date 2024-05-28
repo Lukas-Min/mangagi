@@ -1,9 +1,11 @@
 import React from "react";
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
 import { toUpperCase, isObjectId } from '../../utils';
 
-// Components
+// HOOKS
+import { useViewMangaData } from "../hooks/useMangaData";
+import { useParams } from 'react-router-dom';
+
+// COMPONENTS
 import DeleteButton from '../components/DeleteButton';
 import EditButton from '../components/EditButton';
 import SaveButton from '../components/SaveButton';
@@ -11,29 +13,7 @@ import SaveButton from '../components/SaveButton';
 const ViewManga = () => {
     const { id } = useParams();
 
-    let response;
-
-    const { data: mangaInfo, isLoading, error } = useQuery({
-        queryFn: async () => {
-
-            if(isObjectId(id))
-            {
-                response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/${id}`);
-            }
-            else
-            {
-                response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/${id}`);
-            }
-            
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            console.log(data);
-            return data;
-        },
-        queryKey: ['mangaInfo'],
-    });
+    const { data: mangaInfo, isLoading, error } = useViewMangaData(id);
    
     if (isLoading) return <h1>Loading...</h1>; // U can use this to create a loader...
     if (error) return <h1>Error: {error.message}</h1>; // U can use this to return a specific error if fetching data from db using the API failed.
