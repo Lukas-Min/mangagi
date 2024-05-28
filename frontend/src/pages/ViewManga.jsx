@@ -22,8 +22,31 @@ const ViewManga = () => {
         queryKey: ['mangaInfo'],
     });
 
-    if (isLoading) return <h1>Loading...</h1>;
-    if (error) return <h1>Error: {error.message}</h1>;
+    const saveMangaDetails = async () => {
+        try {
+            const saveResponse = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(mangaInfo.data),
+            });
+
+            if (!saveResponse.ok) {
+                throw new Error('Failed to save manga details');
+            }
+
+            const saveData = await saveResponse.json(); //
+            console.log('Manga saved successfully:', saveData);
+            alert('Manga saved successfully!');
+        } catch (err) {
+            console.error('Error saving manga:', err);
+            alert('Error saving manga:', err.message);
+        }
+    };
+
+    if (isLoading) return <h1>Loading...</h1>; // You can use this to create a loader...
+    if (error) return <h1>Error: {error.message}</h1>; // You can use this to return a specific error if fetching data from db using the API failed.
 
     return (
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-x-8  px-[10vw] lg:px-[15vw] pb-16">
@@ -82,7 +105,7 @@ const ViewManga = () => {
                                 <DeleteButton />
                             </>
                         ) : (
-                            <SaveButton />
+                            <SaveButton onClick={saveMangaDetails}/>
                         )}
                     </div>
                 </div>
