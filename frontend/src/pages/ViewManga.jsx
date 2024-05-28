@@ -1,21 +1,27 @@
 import React from "react";
-
-import { Link} from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toUpperCase, isObjectId } from '../../utils';
 
-// HOOKS
-import { useViewMangaData } from "../hooks/useMangaData";
-import { useParams } from 'react-router-dom';
-
-// COMPONENTS
+// Components
 import DeleteButton from '../components/DeleteButton';
 import EditButton from '../components/EditButton';
 import SaveButton from '../components/SaveButton';
 
 const ViewManga = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
 
-    const { data: mangaInfo, isLoading, error } = useViewMangaData(id);
+    const { data: mangaInfo, isLoading, error } = useQuery({
+        queryFn: async () => {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/${isObjectId(id) ? `find/${id}` : id}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        },
+        queryKey: ['mangaInfo'],
+    });
 
     const saveMangaDetails = async () => {
         try {
@@ -37,6 +43,30 @@ const ViewManga = () => {
         } catch (err) {
             console.error('Error saving manga:', err);
             alert('Error saving manga:', err.message);
+        }
+    };
+
+    const deleteManga = async () => {
+        try {
+            const deleteResponse = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (!deleteResponse.ok) {
+                const errorData = await deleteResponse.json();
+                throw new Error(`Failed to delete manga: ${errorData.message}`);
+            }
+    
+            const deleteData = await deleteResponse.json();
+            console.log('Manga deleted successfully:', deleteData);
+            alert('Manga deleted successfully!');
+            navigate('/');
+        } catch (err) {
+            console.error('Error deleting manga:', err);
+            alert(`Error deleting manga: ${err.message}`);
         }
     };
 
@@ -97,7 +127,7 @@ const ViewManga = () => {
                         {isObjectId(id) ? (
                             <>
                                 <EditButton />
-                                <DeleteButton />
+                                <DeleteButton onClick={deleteManga}/>
                             </>
                         ) : (
                             <SaveButton onClick={saveMangaDetails}/>
