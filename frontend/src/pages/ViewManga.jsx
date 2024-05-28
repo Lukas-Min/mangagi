@@ -36,7 +36,7 @@ const ViewManga = () => {
                 throw new Error('Failed to save manga details');
             }
 
-            const saveData = await saveResponse.json();
+            const saveData = await saveResponse.json(); //
             console.log('Manga saved successfully:', saveData);
             alert('Manga saved successfully!');
         } catch (err) {
