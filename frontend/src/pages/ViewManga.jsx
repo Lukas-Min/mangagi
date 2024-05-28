@@ -1,9 +1,13 @@
 import React from "react";
-import { useQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router-dom';
+
+import { Link} from 'react-router-dom';
 import { toUpperCase, isObjectId } from '../../utils';
 
-// Components
+// HOOKS
+import { useViewMangaData } from "../hooks/useMangaData";
+import { useParams } from 'react-router-dom';
+
+// COMPONENTS
 import DeleteButton from '../components/DeleteButton';
 import EditButton from '../components/EditButton';
 import SaveButton from '../components/SaveButton';
@@ -11,16 +15,7 @@ import SaveButton from '../components/SaveButton';
 const ViewManga = () => {
     const { id } = useParams();
 
-    const { data: mangaInfo, isLoading, error } = useQuery({
-        queryFn: async () => {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/${isObjectId(id) ? `find/${id}` : id}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        },
-        queryKey: ['mangaInfo'],
-    });
+    const { data: mangaInfo, isLoading, error } = useViewMangaData(id);
 
     const saveMangaDetails = async () => {
         try {
