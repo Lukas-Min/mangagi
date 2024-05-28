@@ -1,26 +1,17 @@
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+
+//  HOOKS
+import { useViewAllMangaData } from '../hooks/useMangaData';
 
 const MangaCover = () => {
-    const { data: mangaData, isLoading, error } = useQuery({
-        queryFn: async () => {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/all`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            console.log(data.data._id);
-            return data;
-        },
-        queryKey: ['mangaData'],
-    });
+    const { data: mangaData, isLoading, error } = useViewAllMangaData();
 
     if (isLoading) return <h1>Loading...</h1>; // U can use this to create a loader...
     if (error) return <h1>Error: {error.message}</h1>; // U can use this to return a specific error if fetching data from db using the API failed.
 
 
     return (
-
+        
         <div className='flex justify-center'>
             {mangaData.data.length === 0 ? ( // ? To see the message, change the condition to -> mangaData.data.length !== 0
                 <h1>No Manga Found in DB</h1> // TODO: fix the design and layout of this message. Kayo na bahala kung anong itsura.
