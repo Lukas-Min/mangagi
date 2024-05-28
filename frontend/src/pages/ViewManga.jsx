@@ -15,13 +15,9 @@ const ViewManga = () => {
 
     const { data: mangaInfo, isLoading, error } = useQuery({
         queryFn: async () => {
-
-            if(isObjectId(id))
-            {
+            if(isObjectId(id)) {
                 response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/${id}`);
-            }
-            else
-            {
+            } else {
                 response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/${id}`);
             }
             
@@ -34,9 +30,32 @@ const ViewManga = () => {
         },
         queryKey: ['mangaInfo'],
     });
-   
-    if (isLoading) return <h1>Loading...</h1>; // U can use this to create a loader...
-    if (error) return <h1>Error: {error.message}</h1>; // U can use this to return a specific error if fetching data from db using the API failed.
+
+    const saveMangaDetails = async () => {
+        try {
+            const saveResponse = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(mangaInfo.data),
+            });
+
+            if (!saveResponse.ok) {
+                throw new Error('Failed to save manga details');
+            }
+
+            const saveData = await saveResponse.json();
+            console.log('Manga saved successfully:', saveData);
+            alert('Manga saved successfully!');
+        } catch (err) {
+            console.error('Error saving manga:', err);
+            alert('Error saving manga:', err.message);
+        }
+    };
+
+    if (isLoading) return <h1>Loading...</h1>; // You can use this to create a loader...
+    if (error) return <h1>Error: {error.message}</h1>; // You can use this to return a specific error if fetching data from db using the API failed.
 
     return (
         <>
@@ -75,7 +94,6 @@ const ViewManga = () => {
 
                             </div>
 
-
                             {(!mangaInfo.data.description) ? ( <p className="text-justify text-lg py-5">
                                 No available description.
                             </p>
@@ -87,7 +105,6 @@ const ViewManga = () => {
                                     </React.Fragment>
                                 ))}
                             </p>)}
-
 
                             <div>
                                 <h1 className="sm:text-2xl text-2xl font-bold mt-6 mb-3 text-center xl:text-left pb-4">
@@ -110,7 +127,7 @@ const ViewManga = () => {
                                     <EditButton />
                                 </>
                             ) : (
-                                <SaveButton />
+                                <SaveButton onClick={saveMangaDetails} />
                             )}
                             </div>
                         </div>
