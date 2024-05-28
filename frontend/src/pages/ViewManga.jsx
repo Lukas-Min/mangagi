@@ -87,7 +87,7 @@ const ViewManga = () => {
                     </div>
                 </div>
             </div>
-            <div className="order-1 lg:order-2 flex justify-center">
+            <div className="order-1 lg:order-2 flex justify-center lg:mt-5">
                 <div className="max-h-full">
                     <img
                         src={`https://uploads.mangadex.org/covers/${mangaInfo.data.manga_id}/${mangaInfo.data.cover_art}`}
