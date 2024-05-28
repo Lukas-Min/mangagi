@@ -199,7 +199,7 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
 };
 
 const addManga = async (req, res, next) => { //* This adds the manga data in the database
-    const { title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+    const { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
 
     try {
         if (!checkMandatoryField(title)) {
@@ -239,6 +239,7 @@ const addManga = async (req, res, next) => { //* This adds the manga data in the
 
 
         const newManga = new MangaModel({
+            manga_id,
             title,
             description,
             chapters,
@@ -246,7 +247,8 @@ const addManga = async (req, res, next) => { //* This adds the manga data in the
             manga_status,
             manga_state,
             author,
-            year_published
+            year_published,
+            cover_art
         });
 
         await newManga.save();
