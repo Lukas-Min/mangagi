@@ -11,6 +11,12 @@ import DeleteButton from '../components/DeleteButton';
 import EditButton from '../components/EditButton';
 import SaveButton from '../components/SaveButton';
 import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const ViewManga = () => {
     const { id } = useParams();
@@ -19,6 +25,8 @@ const ViewManga = () => {
     const { data: mangaInfo, isLoading, error } = useViewMangaData(id);
 
     const [saveMessage, setSaveMessage] = useState(null);
+    const [open, setOpen] = useState(false);
+
 
     const saveMangaDetails = async () => {
         
@@ -68,14 +76,22 @@ const ViewManga = () => {
                 throw new Error(`Failed to delete manga: ${errorData.message}`);
             }
     
-            const deleteData = await deleteResponse.json();
-            console.log('Manga deleted successfully:', deleteData);
+            // const deleteData = await deleteResponse.json();
+            // console.log('Manga deleted successfully:', deleteData);
             alert('Manga deleted successfully!');
             navigate('/');
         } catch (err) {
-            console.error('Error deleting manga:', err);
+            // console.error('Error deleting manga:', err);
             alert(`Error deleting manga: ${err.message}`);
         }
+    };
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     return (
@@ -157,7 +173,7 @@ const ViewManga = () => {
                                 {isObjectId(id) ? (
                                     <>
                                         <EditButton />
-                                        <DeleteButton onClick={deleteManga}/>
+                                        <DeleteButton onClick={handleClickOpen} />
                                     </>
                                 ) : (
                                     <SaveButton onClick={saveMangaDetails}/>
@@ -178,6 +194,23 @@ const ViewManga = () => {
 
                 </section>
             )}
+//TODO : PAGAWAN NALANG PO NG DESIGN KASI PLAIN LANG UNLESS OKAY LANG SAINYO TOH
+            <Dialog open={open} onClose={handleClose}> 
+                <DialogTitle>Confirm Delete</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this manga? This action cannot be undone.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={deleteManga} color="secondary" autoFocus>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
     
