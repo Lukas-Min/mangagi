@@ -194,7 +194,7 @@ const ViewManga = () => {
 
                 </section>
             )}
-//TODO : PAGAWAN NALANG PO NG DESIGN KASI PLAIN LANG UNLESS OKAY LANG SAINYO TOH
+
             <Dialog open={open} onClose={handleClose}> 
                 <DialogTitle>Confirm Delete</DialogTitle>
                 <DialogContent>
