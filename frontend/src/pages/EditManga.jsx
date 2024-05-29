@@ -2,6 +2,7 @@ import React from 'react';
 import ImageUpload from '../components/ImageUpload';
 import MangaForm from '../components/MangaForm';
 
+
 const EditManga = () => {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-[15vw] my-14">
