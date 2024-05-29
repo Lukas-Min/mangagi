@@ -88,8 +88,8 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
             genre: genreTags,
             manga_status: mangaData.data.attributes.status,
             manga_state: mangaData.data.attributes.state,
-            author: authorNamesArray.length != 0 ? authorNamesArray : "Unkown",
-            year_published: mangaData.data.attributes.year != null ? mangaData.data.attributes.year : "Unknown",
+            author: authorNamesArray.length != 0 ? authorNamesArray : "Unknown",
+            year_published: mangaData.data.attributes.year,
             cover_art: coverArtData.data.attributes.fileName
         }
 
@@ -253,7 +253,7 @@ const addManga = async (req, res, next) => { //* This adds the manga data in the
 
         await newManga.save();
 
-        return res.status(201).send({
+        return res.status(200).send({
             successful: true,
             message: 'Manga added successfully.',
             data: newManga

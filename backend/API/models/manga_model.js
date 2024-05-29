@@ -52,7 +52,7 @@ const MangaSchema = new Schema({
         type: Number,
         required: false,
         trim: true,
-        default: "Unknown"
+        default: null
     },
     cover_art: {
         type: String,

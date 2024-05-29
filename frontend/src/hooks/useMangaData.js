@@ -101,10 +101,20 @@ export const useViewAllMangaData = () => {
     return useQuery({
         queryFn: async () => {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/all`);
+            // console.log(response)
+
+            if (response.status === 404) {
+                throw new Error('Manga data not found');
+            }
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+
+
             const data = await response.json();
+
+            console.log(data);
             return data;
         },
         queryKey: ['mangaData'],
