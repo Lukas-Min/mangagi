@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { toUpperCase, isObjectId } from '../../utils';
 
 // HOOKS
@@ -10,6 +10,7 @@ import { useViewMangaData } from '../hooks/useMangaData';
 import DeleteButton from '../components/DeleteButton';
 import EditButton from '../components/EditButton';
 import SaveButton from '../components/SaveButton';
+import Alert from '@mui/material/Alert';
 
 const ViewManga = () => {
     const { id } = useParams();
@@ -17,9 +18,11 @@ const ViewManga = () => {
 
     const { data: mangaInfo, isLoading, error } = useViewMangaData(id);
 
-    // console.log(mangaInfo.data);
+    const [saveMessage, setSaveMessage] = useState(null);
 
     const saveMangaDetails = async () => {
+        
+
         try {
             const saveResponse = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/add`, {
                 method: 'POST',
@@ -41,12 +44,13 @@ const ViewManga = () => {
                 throw new Error('Failed to save manga details');
             }
 
-            const saveData = await saveResponse.json(); //
-            console.log('Manga saved successfully:', saveData);
-            alert('Manga saved successfully!');
+            // const saveData = await saveResponse.json(); //
+            // console.log('Manga saved successfully:', saveData);
+            setSaveMessage({ content: 'Manga saved successfully!', severity: 'success' });
+            
         } catch (err) {
-            console.error('Error saving manga:', err);
-            alert('Error saving manga:', err.message);
+            // console.error('Error saving manga:', err);
+            setSaveMessage({ content: `Error saving manga: ${err.message}`, severity: 'error' });
         }
     };
 
@@ -76,6 +80,7 @@ const ViewManga = () => {
 
     return (
         <>
+
             {isLoading && (
                 <div className="flex justify-center items-center h-screen">
                     <h1>Loading...</h1>
@@ -93,10 +98,14 @@ const ViewManga = () => {
                 </section>
             )}
 
-
             {!isLoading && !error && (
                 <section className="grid grid-cols-1 lg:grid-cols-3 gap-x-8  px-[10vw] lg:px-[15vw] pb-16">
                     <div className="col-span-1 lg:col-span-2 order-2 lg:order-1 flex flex-col justify-center items-center lg:items-start p-5">
+                        {saveMessage && (
+                            <div className="w-full">
+                                <Alert severity={saveMessage.severity} onClose={() => setSaveMessage(null)}>{saveMessage.content}</Alert>
+                            </div>
+                        )}
                         <div className="w-full">
                             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center lg:text-left py-2">{mangaInfo.data.title}</h1>
 
@@ -156,7 +165,6 @@ const ViewManga = () => {
                             </div>
                         </div>
                     </div>
-
 
                     <div className="order-1 lg:order-2 flex justify-center lg:mt-5">
                         <div className="max-h-full">
