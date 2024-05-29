@@ -1,4 +1,5 @@
 import React from 'react';
+import AnimatedMulti from '../components/TagsDropdown';
 
 const MangaForm = () => {
   return (
@@ -43,7 +44,7 @@ const MangaForm = () => {
       <div className="w-full">
         <h3 className="italic">Manga Status:</h3>
         <select
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
+          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full "
           defaultValue=""
         >
           <option value="" disabled hidden>Select Status...</option>
@@ -61,11 +62,7 @@ const MangaForm = () => {
       </div>
       <div className="col-span-1 w-full">
         <h3 className="italic">Tags:</h3>
-        <input
-          type="text"
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
-          placeholder="Dropdown"
-        />
+        <AnimatedMulti />
       </div>
       <div className="col-span-1 md:col-span-2 w-full">
         <h3 className="italic">Description:</h3>
