@@ -4,9 +4,9 @@ const About = () => {
   return (
     <div className="container mx-auto px-4 py-0 text-center">
       <h1 className="text-4xl font-bold mb-2 text-start">About Us</h1>
-      <p className="text-4xl my-6">Meet the MangaGu Team!</p>
+      <p className="text-4xl my-6 font-semibold">Meet the MangaGu Team!</p>
       <div className="flex flex-col lg:flex-row justify-center items-center gap-10">
-        <div className='border-2 border-blush shadow transform hover:scale-105 transition duration-300 cursor-pointer'>
+        <div className='border-2 rounded-lg border-blush shadow transform hover:scale-105 transition duration-300 cursor-pointer'>
           <div className="max-w-lg rounded overflow-hidden shadow-lg m-4 bg-raisin">
             <img
               src="/img/About/MorPaDe.jpg"
@@ -21,7 +21,7 @@ const About = () => {
             </div>
           </div>
         </div>
-        <div className='border-2 border-blush shadow transform hover:scale-105 transition duration-300 cursor-pointer'>
+        <div className='border-2 rounded-lg border-blush shadow transform hover:scale-105 transition duration-300 cursor-pointer'>
           <div className="max-w-lg rounded overflow-hidden shadow-lg m-4 bg-raisin">
             <img
               src="/img/About/ArMal.jpg"
