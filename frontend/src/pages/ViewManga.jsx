@@ -93,11 +93,6 @@ const ViewManga = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    const authors = mangaInfo.data.author;
-    const formattedAuthors = authors.length === 1
-        ? authors[0]
-        : authors.slice(0, -1).join(', ') + (authors.length > 1 ? ' and ' : '') + authors[authors.length - 1];
-
 
     return (
         <>
@@ -132,7 +127,13 @@ const ViewManga = () => {
 
                             <div className="grid grid-cols-1 xs:grid-cols-3 gap-x-3 text-center text-nowrap">
                                 <div className="text-baseline sm:text-lg py-2 lg:py-3 lg:xl text-start col-span-1 xs:col-span-3">
-                                    <h1 className="p-2">Author: {formattedAuthors}</h1>
+                                    <h1 className="p-2">
+                                        Author: {mangaInfo.data.author.length === 1
+                                            ? mangaInfo.data.author[0]
+                                            : mangaInfo.data.author.length === 2
+                                                ? mangaInfo.data.author.join(' and ')
+                                                : mangaInfo.data.author.slice(0, -1).join(', ') + ', and ' + mangaInfo.data.author[mangaInfo.data.author.length - 1]}
+                                    </h1>
                                 </div>
 
                                 <div className="bg-raisin rounded-lg">
