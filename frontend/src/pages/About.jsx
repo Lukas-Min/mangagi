@@ -9,7 +9,7 @@ const About = () => {
         <div className='border-2 rounded-lg border-blush shadow transform hover:scale-105 transition duration-300'>
           <div className="max-w-lg rounded overflow-hidden shadow-lg m-4 bg-raisin">
             <img
-              src="/img/About/MorPaDe.jpg"
+              src="/img/team/MorPaDe.jpg"
               alt="MorPaDe"
               className="w-full h-[50vh] object-cover"
             />
@@ -28,7 +28,7 @@ const About = () => {
         <div className='border-2 rounded-lg border-blush shadow transform hover:scale-105 transition duration-300'>
           <div className="max-w-lg rounded overflow-hidden shadow-lg m-4 bg-raisin">
             <img
-              src="/img/About/ArMal.jpg"
+              src="/img/team/ArMal.jpg"
               alt="ArMal"
               className="w-full h-[50vh] object-cover"
             />
