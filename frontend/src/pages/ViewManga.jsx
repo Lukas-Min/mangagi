@@ -32,7 +32,7 @@ const ViewManga = () => {
 
             if (!saveResponse.ok) {
                 throw new Error('Failed to save manga details');
-            }   
+            }
 
             setSaveMessage({ content: 'Manga saved successfully!', severity: 'success' });
         } catch (err) {
@@ -98,7 +98,7 @@ const ViewManga = () => {
                         )}
                         <div className="w-full">
                             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center lg:text-left py-2">{mangaInfo.data.title}</h1>
-                            <div className="grid grid-cols-1 xs:grid-cols-3 gap-x-3 text-center text-nowrap">
+                            <div className="grid grid-cols-1 xs:grid-cols-3 gap-x-3 gap-y-2 xs:gap-y-0 text-center text-nowrap">
                                 <div className="text-baseline sm:text-lg py-2 lg:py-3 lg:xl text-start col-span-1 xs:col-span-3">
                                     <h1 className="p-2">
                                         Author: {mangaInfo.data.author.length === 1

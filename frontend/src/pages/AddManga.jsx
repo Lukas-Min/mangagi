@@ -1,6 +1,8 @@
 import React from 'react';
 import ImageUpload from '../components/ImageUpload';
 import MangaForm from '../components/MangaForm';
+import SaveButton from '../components/SaveButton';
+import CancelButton from '../components/CancelButton';
 
 const AddManga = () => {
   return (
@@ -8,6 +10,10 @@ const AddManga = () => {
       <div className="lg:col-span-2 border-2 order-2 lg:order-1 border-rose rounded-lg bg-raisin px-8 py-6">
         <h1 className="text-4xl font-bold my-6 text-center">Add Manga</h1>
         <MangaForm />
+        <div className="flex justify-center w-full lg:col-span-2 gap-2">
+          <SaveButton />
+          <CancelButton />
+        </div>
       </div>
       <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin flex items-center justify-center">
         <div className="w-full h-full">
