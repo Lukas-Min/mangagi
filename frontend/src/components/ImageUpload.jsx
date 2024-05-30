@@ -21,13 +21,11 @@ const ImageUpload = () => {
   return (
     <>
       <label htmlFor="MangaImage" className="relative cursor-pointer group w-full h-full bg-raisin">
-        <div className="rounded-lg w-full h-[40vh] lg:h-full flex flex-col items-center justify-center hover:bg-black hover:bg-opacity-30 transition-colors duration-300">
-
-
+        <div className="rounded-lg w-full h-full md:h-full flex flex-col items-center justify-center hover:bg-black hover:bg-opacity-30 transition-colors duration-300">
           {/* Uploaded image or upload prompt */}
           {imageSrc ? (
             <div className="w-full h-full relative">
-              <img id="the-picture" src={imageSrc} alt="Uploaded" className="w-full h-full object-contain lg:object-cover rounded" />
+              <img id="the-picture" src={imageSrc} alt="Uploaded" className="w-full h-full object-contain lg:object-cover rounded-lg" />
               <button type="button" onMouseDown={removeImage} className="absolute top-2 right-2 m-2 bg-amaranth text-rose font-bold px-3 py-1 rounded-lg hover:bg-blush transition-colors z-10">
                 Remove
               </button>
