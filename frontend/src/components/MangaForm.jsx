@@ -3,8 +3,8 @@ import AnimatedMulti from '../components/TagsDropdown';
 
 const MangaForm = () => {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-x-3 sm:gap-y-1">
-      <div className="w-full md:col-span-2">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-x-3 sm:gap-y-1">
+      <div className="w-full lg:col-span-2">
         <h3 className="italic">Title:</h3>
         <input
           type="text"
@@ -12,7 +12,7 @@ const MangaForm = () => {
           placeholder="Solo Leveling"
         />
       </div>
-      <div className="w-full">
+      <div className="w-full lg:col-span-1">
         <h3 className="italic">Year Published:</h3>
         <input
           type="text"
@@ -20,7 +20,7 @@ const MangaForm = () => {
           placeholder="2018"
         />
       </div>
-      <div className="w-full">
+      <div className="w-full lg:col-span-1">
         <h3 className="italic">Author:</h3>
         <input
           type="text"
@@ -28,7 +28,7 @@ const MangaForm = () => {
           placeholder="H-Goon"
         />
       </div>
-      <div className="w-full">
+      <div className="w-full lg:col-span-1">
         <h3 className="italic">Manga State:</h3>
         <select
           className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
@@ -41,10 +41,10 @@ const MangaForm = () => {
           <option value="Cancelled">Cancelled</option>
         </select>
       </div>
-      <div className="w-full">
+      <div className="w-full lg:col-span-1">
         <h3 className="italic">Manga Status:</h3>
         <select
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full "
+          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
           defaultValue=""
         >
           <option value="" disabled hidden>Select Status...</option>
@@ -52,7 +52,7 @@ const MangaForm = () => {
           <option value="Finished">Finished</option>
         </select>
       </div>
-      <div className="w-full">
+      <div className="w-full lg:col-span-1">
         <h3 className="italic">Genre:</h3>
         <input
           type="text"
@@ -60,18 +60,18 @@ const MangaForm = () => {
           placeholder="Enter Genre.."
         />
       </div>
-      <div className="col-span-1 w-full">
+      <div className="lg:col-span-1 w-full">
         <h3 className="italic">Tags:</h3>
         <AnimatedMulti />
       </div>
-      <div className="col-span-1 md:col-span-2 w-full">
+      <div className="lg:col-span-2 w-full">
         <h3 className="italic">Description:</h3>
         <textarea
           className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full h-32 resize-none"
           placeholder="Enter Description.."
         />
       </div>
-      <div className="flex justify-center col-span-2 ">
+      <div className="flex justify-center w-full lg:col-span-2">
         <button className="px-6 py-2 w-full rounded-lg bg-amaranth hover:bg-blush transition-colors text-white my-3 shadow-sm shadow-[rgba(0,0,0,0.31)]">
           <h1 className="text-base text-center font-bold">Save</h1>
         </button>
