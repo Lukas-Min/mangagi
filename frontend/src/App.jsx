@@ -14,31 +14,33 @@ import ViewManga from './pages/ViewManga';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Error404 from './pages/Error404';
+import ScrollToTop from './components/ScrollToTop';
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-        <Router>
-            <div className="flex flex-col min-h-screen">
-                <Navbar />
-                <div className="flex-grow">
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/add-manga" element={<AddManga />} />
-                        <Route path="/edit-manga/:id" element={<EditManga />} />
-                        <Route path="/view-manga/:id" element={<ViewManga />} />
-                        <Route path="/search-manga" element={<SearchManga />} />
-                        <Route path="/*" element={<Error404 />} />
-                    </Routes>
+    return (
+        <QueryClientProvider client={queryClient}>
+            <Router>
+                <ScrollToTop />
+                <div className="flex flex-col min-h-screen">
+                    <Navbar />
+                    <div className="flex-grow">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/add-manga" element={<AddManga />} />
+                            <Route path="/edit-manga/:id" element={<EditManga />} />
+                            <Route path="/view-manga/:id" element={<ViewManga />} />
+                            <Route path="/search-manga" element={<SearchManga />} />
+                            <Route path="/*" element={<Error404 />} />
+                        </Routes>
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
-        </Router>
-    </QueryClientProvider>
-  );
+            </Router>
+        </QueryClientProvider>
+    );
 };
 
 export default App;
