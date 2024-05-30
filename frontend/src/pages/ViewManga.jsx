@@ -141,7 +141,7 @@ const ViewManga = () => {
                             <div className="flex justify-between my-2 items-center">
                                 {isObjectId(id) ? (
                                     <>
-                                        <EditButton />
+                                        <EditButton id={mangaInfo.data._id}/>
                                         <DeleteButton onClick={handleClickOpen} />
                                     </>
                                 ) : (
