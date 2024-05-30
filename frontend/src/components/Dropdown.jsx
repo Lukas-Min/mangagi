@@ -42,9 +42,6 @@ export const Tags = [
   { value: "villainess", label: "Villainess" },
   { value: "virtualReality", label: "Virtual Reality" },
   { value: "zombies", label: "Zombies" },
-];
-
-export const Genres = [
   { value: "actionAdventure", label: "Action / Adventure" },
   { value: "adult", label: "Adult" },
   { value: "adventure", label: "Adventure" },
@@ -100,7 +97,6 @@ export const Genres = [
   { value: "yuri", label: "Yuri" }
 ];
 
-
 export const State = [
   { value: "onGoing", label: "Ongoing" },
   { value: "completed", label: "Completed" },
@@ -113,16 +109,14 @@ export const Status = [
   { value: "comingSoon", label: "Coming Soon" },
 ];
 
-const AnimatedMulti = ({ isTags }) => {
-  const tagsGenres = isTags ? Tags : Genres;
-
+const AnimatedMulti = () => {
   return (
     <Select
       closeMenuOnSelect={false}
       components={animatedComponents}
       defaultValue=""
       isMulti
-      options={tagsGenres}
+      options={Tags}
       className="rounded-md border-amaranth border text-licorice w-full"
     />
   );
