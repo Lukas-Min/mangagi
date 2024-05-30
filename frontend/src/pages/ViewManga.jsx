@@ -155,7 +155,7 @@ const ViewManga = () => {
                             <img
                                 src={`https://uploads.mangadex.org/covers/${mangaInfo.data.manga_id}/${mangaInfo.data.cover_art}`}
                                 alt="Cover Image"
-                                className="border-4 border-red-300 w-full h-auto rounded-lg max-h-[30vh] md:max-h-[40vh]  lg:max-h-full"
+                                className="border-4 border-red-300 w-full h-auto rounded-lg max-h-[30vh] md:max-h-[40vh] lg:max-h-full"
                             />
                         </div>
                     </div>

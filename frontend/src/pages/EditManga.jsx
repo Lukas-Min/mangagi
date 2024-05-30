@@ -16,9 +16,9 @@ const EditManga = () => {
           <CancelButton />
         </div>
       </div>
-      <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin flex items-center justify-center">
+      <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin  h-auto width-auto min-h-[30vh] max-h-[30vh] lg:max-h-[60vh]">
         <div className="w-full h-full">
-          <ImageUpload />
+          <ImageUpload className="w-full h-full object-cover" />
         </div>
       </div>
     </section>

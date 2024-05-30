@@ -4,9 +4,10 @@ import MangaForm from '../components/MangaForm';
 import SaveButton from '../components/SaveButton';
 import CancelButton from '../components/CancelButton';
 
-const AddManga = () => {
+
+const EditManga = () => {
   return (
-    <section className="grid grid-cols-1  lg:grid-cols-3 gap-8 px-[15vw] my-14">
+    <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-[15vw] my-14">
       <div className="lg:col-span-2 border-2 order-2 lg:order-1 border-rose rounded-lg bg-raisin px-8 py-6">
         <h1 className="text-4xl font-bold my-6 text-center">Add Manga</h1>
         <MangaForm />
@@ -15,13 +16,13 @@ const AddManga = () => {
           <CancelButton />
         </div>
       </div>
-      <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin flex items-center justify-center">
+      <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin  h-auto width-auto min-h-[30vh] max-h-[30vh] lg:max-h-[60vh]">
         <div className="w-full h-full">
-          <ImageUpload />
+          <ImageUpload className="w-full h-full object-cover" />
         </div>
       </div>
     </section>
   );
 };
 
-export default AddManga;
+export default EditManga;
