@@ -1,10 +1,10 @@
 const SaveButton = ({ onClick }) => {
     return (
-        <button 
-            className="h-12 rounded-3xl bg-amaranth w-60 me-3" 
+        <button
+            className="h-12 rounded-xl bg-amaranth w-full me-3 hover:bg-blush transition-colors duration-200"
             onClick={onClick}
         >
-            <h1 className="text-sm text-center font-bold">Save</h1>
+            <h1 className="text-center font-bold">Save</h1>
         </button>
     );
 };
