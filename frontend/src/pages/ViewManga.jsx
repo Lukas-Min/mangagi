@@ -128,7 +128,7 @@ const ViewManga = () => {
                             <div className="grid grid-cols-1 xs:grid-cols-3 gap-x-3 text-center text-nowrap">
                                 <div className="text-baseline sm:text-lg py-2 lg:py-3 lg:xl text-start col-span-1 xs:col-span-3">
                                     <h1 className="p-2">
-                                        Author: {mangaInfo.data.author.length === 1
+                                        <span className="font-bold">Author:</span> {mangaInfo.data.author.length === 1
                                             ? mangaInfo.data.author[0]
                                             : mangaInfo.data.author.length === 2
                                                 ? mangaInfo.data.author.join(' and ')
