@@ -44,27 +44,36 @@ export const Tags = [
   { value: "zombies", label: "Zombies" },
 ];
 
+export const Genres = [
+  { value: "action", label: "Action" },
+  { value: "adventure", label: "Adventure" },
+  { value: "comedy", label: "Comedy" },
+  { value: "drama", label: "Drama" },
+  { value: "fantasy", label: "Fantasy" },
+  { value: "horror", label: "Horror" },
+  { value: "mystery", label: "Mystery" },
+  { value: "romance", label: "Romance" },
+  { value: "sciFi", label: "Science Fiction" },
+  { value: "sliceOfLife", label: "Slice of Life" },
+  { value: "sports", label: "Sports" },
+  { value: "thriller", label: "Thriller" },
+  { value: "western", label: "Western" },
+];
 
+export const State = [
+  { value: "onGoing", label: "Ongoing" },
+  { value: "completed", label: "Completed" },
+  { value: "onHold", label: "On Hold" },
+  { value: "cancelled", label: "Cancelled" },
+];
 
-export default function AnimatedMulti() {
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
+export const Status = [
+  { value: "published", label: "Published" },
+  { value: "comingSoon", label: "Coming Soon" },
+];
 
-    }),
-    input: (provided, state) => ({
-      ...provided,
-      margin: "0",
-      padding: "0",
-      lineHeight: "16px",
-    }),
-    singleValue: (provided, state) => ({
-      ...provided,
-      margin: "0",
-      padding: "0",
-      
-    }),
-  };
+const AnimatedMulti = ({ isTags }) => {
+  const tagsGenres = isTags ? Tags : Genres;
 
   return (
     <Select
@@ -72,9 +81,21 @@ export default function AnimatedMulti() {
       components={animatedComponents}
       defaultValue=""
       isMulti
-      options={Tags}
+      options={tagsGenres}
       className="rounded-md border-amaranth border text-licorice w-full"
-      styles={customStyles} // Apply the custom styles here
     />
   );
-}
+};
+
+const SingleOption = ({ isState }) => {
+  const stateStatus = isState ? State : Status;
+  return (
+    <Select
+      className="basic-single rounded-md border-amaranth border text-licorice w-full"
+      classNamePrefix="select"
+      options={stateStatus}
+    />
+  );
+};
+
+export { AnimatedMulti, SingleOption };

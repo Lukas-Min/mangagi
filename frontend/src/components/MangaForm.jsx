@@ -1,5 +1,6 @@
 import React from 'react';
-import AnimatedMulti from '../components/TagsDropdown';
+import { SingleOption, AnimatedMulti } from './Dropdown';
+import { Tags, Genres, State, Status } from './Dropdown';
 
 const MangaForm = () => {
   return (
@@ -8,7 +9,7 @@ const MangaForm = () => {
         <h3 className="italic">Title:</h3>
         <input
           type="text"
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
+          className="p-2 rounded-md bg-white border-amaranth border text-licorice w-full"
           placeholder="Solo Leveling"
         />
       </div>
@@ -16,7 +17,7 @@ const MangaForm = () => {
         <h3 className="italic">Year Published:</h3>
         <input
           type="text"
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
+          className="p-2 rounded-md bg-white border-amaranth border text-licorice w-full"
           placeholder="2018"
         />
       </div>
@@ -24,50 +25,31 @@ const MangaForm = () => {
         <h3 className="italic">Author:</h3>
         <input
           type="text"
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
+          className="p-2 rounded-md bg-white border-amaranth border text-licorice w-full"
           placeholder="H-Goon"
         />
       </div>
       <div className="w-full lg:col-span-1">
-        <h3 className="italic">Manga State:</h3>
-        <select
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
-          defaultValue=""
-        >
-          <option value="" disabled hidden>Select State...</option>
-          <option value="Ongoing">Ongoing</option>
-          <option value="Completed">Completed</option>
-          <option value="On Hold">On Hold</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
+        <h3 className="italic">State:</h3>
+        <SingleOption isState={true} />
       </div>
       <div className="w-full lg:col-span-1">
-        <h3 className="italic">Manga Status:</h3>
-        <select
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
-          defaultValue=""
-        >
-          <option value="" disabled hidden>Select Status...</option>
-          <option value="Publishing">Publishing</option>
-          <option value="Finished">Finished</option>
-        </select>
+        <h3 className="italic">Status:</h3>
+        <SingleOption isState={false} />
       </div>
       <div className="w-full lg:col-span-1">
         <h3 className="italic">Genre:</h3>
-        <input
-          type="text"
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full"
-          placeholder="Enter Genre.."
-        />
+        <AnimatedMulti isTags={false} />
       </div>
       <div className="lg:col-span-1 w-full">
         <h3 className="italic">Tags:</h3>
-        <AnimatedMulti />
+        <AnimatedMulti isTags={true} />
       </div>
+
       <div className="lg:col-span-2 w-full">
         <h3 className="italic">Description:</h3>
         <textarea
-          className="p-1 rounded-md bg-white border-amaranth border text-licorice w-full h-32 resize-none"
+          className="p-2 rounded-md bg-white border-amaranth border text-licorice w-full h-32 resize-none"
           placeholder="Enter Description.."
         />
       </div>
