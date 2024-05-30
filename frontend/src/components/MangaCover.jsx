@@ -20,7 +20,7 @@ const MangaCover = () => {
                     </div>
                 </section>
             )}
-            
+
             {!isLoading && !error && (
                 <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-x-4 gap-y-4'>
                     {mangaData.data.map((manga, index) => (
@@ -38,6 +38,18 @@ const MangaCover = () => {
                             </div>
                         </Link>
                     ))}
+                    <Link to={`/add-manga`} className="border border-rose rounded-lg overflow-hidden relative transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                        <div className="absolute bottom-0 left-0 w-full p-2 text-white pt-[100%] bg-gradient-to-t from-black to-transparent">
+                            <img
+                                src="/img/icons/plus.png"
+                                alt="plus"
+                                className="object-cover w-full h-full pb-[25%] opacity-80"
+                            />
+                            <div className="absolute bottom-0 left-0 w-full p-2 text-rose pt-[100%] bg-gradient-to-t from-black to-transparent">
+                                <h3 className="font-bold mb-1">Add Manga</h3>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             )}
         </div>
