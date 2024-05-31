@@ -5,6 +5,7 @@ const router = express.Router();
 
 //* POST
 router.post('/add', mangaController.addManga);
+router.post('/save', mangaController.saveManga);
 
 //* GET
 router.get('/find/all', mangaController.findAllManga);
