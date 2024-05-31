@@ -72,7 +72,7 @@ const AddManga = () => {
             </div>
         )}
         <h1 className="text-4xl font-bold my-6 text-center">Add Manga</h1>
-        <MangaForm onSubmit={handleMangaSubmit} />
+        <MangaForm onSubmit={handleMangaSubmit} mode={'add'} />
         
       </div>
       <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin  h-auto width-auto min-h-[30vh] max-h-[30vh] lg:max-h-[70vh]">
