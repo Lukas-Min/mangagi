@@ -39,15 +39,13 @@ const MangaCover = () => {
                         </Link>
                     ))}
                     <Link to={`/add-manga`} className="border border-rose rounded-lg overflow-hidden relative transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
-                        <div className="absolute bottom-0 left-0 w-full p-2 text-white pt-[100%] bg-gradient-to-t from-black to-transparent">
-                            <img
-                                src="/img/icons/plus.png"
-                                alt="plus"
-                                className="object-cover w-full h-full pb-[25%] opacity-80"
-                            />
-                            <div className="absolute bottom-0 left-0 w-full p-2 text-rose pt-[100%] bg-gradient-to-t from-black to-transparent">
-                                <h3 className="font-bold mb-1">Add Manga</h3>
-                            </div>
+                        <img
+                            src="img/icons/plus.png"
+                            alt="Add New Manga"
+                            className="object-cover w-full h-full"
+                        />
+                        <div className="absolute bottom-0 left-0 w-full p-2 text-white pt-[100%] bg-opacity-30 bg-gradient-to-t from-black to-transparent">
+                            <h3 className="font-bold mb-1">Add Manga</h3>
                         </div>
                     </Link>
                 </div>
