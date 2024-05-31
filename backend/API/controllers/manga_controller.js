@@ -484,11 +484,83 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
 
 };
 
+const saveManga = async (req, res, next) => { //* This saves the manga data from the MangaDex API into the MongoDB cluster
+    const { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+
+    try {
+        if (!checkMandatoryField(title)) {
+            return res.status(400).send({
+                successful: false,
+                message: "Title is not defined."
+            });
+        }
+
+        if (!checkMandatoryField(description)) {
+            return res.status(400).send({
+                successful: false,
+                message: "Description is not defined."
+            });
+        }
+
+        if (!Array.isArray(genre) || genre.length === 0) {
+            return res.status(400).send({
+                successful: false,
+                message: "Genre must be a non-empty array."
+            });
+        }
+
+        if (!checkMandatoryField(manga_status)) {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga status is not defined."
+            });
+        }
+
+        if (!checkMandatoryField(manga_state)) {
+            return res.status(400).send({
+                successful: false,
+                message: "Manga state is not defined."
+            });
+        }
+
+
+        const newManga = new MangaModel({
+            manga_id,
+            title,
+            description,
+            chapters,
+            genre,
+            manga_status,
+            manga_state,
+            author,
+            year_published,
+            cover_art
+        });
+
+        await newManga.save();
+
+        return res.status(200).send({
+            successful: true,
+            message: 'Manga added successfully.',
+            data: newManga
+        });
+
+    } catch (err) {
+        console.error('Server error:', err);
+        return res.status(500).send({
+            successful: false,
+            message: 'Error adding manga',
+            data: err.message
+        });
+    }
+}
+
 export default {
     searchMangaById,
     deleteMangabyId,
     findAllManga,
     addManga,
     updateMangaDetail,
-    viewDetailsByObjId
+    viewDetailsByObjId,
+    saveManga
 }
