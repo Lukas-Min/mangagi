@@ -58,7 +58,7 @@ const MangaSchema = new Schema({
         type: String,
         required: false,
         trim: true,
-        default: ""
+        default: null
     }
 }, { timestamps: true });
 
