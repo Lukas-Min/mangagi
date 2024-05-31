@@ -8,10 +8,10 @@ export const Tags = [
   { value: "aliens", label: "Aliens" },
   { value: "animals", label: "Animals" },
   { value: "cooking", label: "Cooking" },
-  { value: "crossdressing", label: "Crossdressing" },
+  { value: "cross dressing", label: "Crossdressing" },
   { value: "delinquents", label: "Delinquents" },
   { value: "demons", label: "Demons" },
-  { value: "genderswap", label: "Genderswap" },
+  { value: "gender swap", label: "Genderswap" },
   { value: "ghosts", label: "Ghosts" },
   { value: "gyaru", label: "Gyaru" },
   { value: "harem", label: "Harem" },
@@ -19,54 +19,54 @@ export const Tags = [
   { value: "loli", label: "Loli" },
   { value: "mafia", label: "Mafia" },
   { value: "magic", label: "Magic" },
-  { value: "martialArts", label: "Martial Arts" },
+  { value: "martial arts", label: "Martial Arts" },
   { value: "military", label: "Military" },
-  { value: "monsterGirls", label: "Monster Girls" },
+  { value: "monster girls", label: "Monster Girls" },
   { value: "monsters", label: "Monsters" },
   { value: "music", label: "Music" },
   { value: "ninja", label: "Ninja" },
-  { value: "officeWorkers", label: "Office Workers" },
+  { value: "office workers", label: "Office Workers" },
   { value: "police", label: "Police" },
-  { value: "postApocalyptic", label: "Post-Apocalyptic" },
+  { value: "post apocalyptic", label: "Post-Apocalyptic" },
   { value: "reincarnation", label: "Reincarnation" },
-  { value: "reverseHarem", label: "Reverse Harem" },
+  { value: "reverse harem", label: "Reverse Harem" },
   { value: "samurai", label: "Samurai" },
-  { value: "schoolLife", label: "School Life" },
+  { value: "school life", label: "School Life" },
   { value: "shota", label: "Shota" },
   { value: "supernatural", label: "Supernatural" },
   { value: "survival", label: "Survival" },
-  { value: "timeTravel", label: "Time Travel" },
-  { value: "traditionalGames", label: "Traditional Games" },
+  { value: "time travel", label: "Time Travel" },
+  { value: "traditional games", label: "Traditional Games" },
   { value: "vampires", label: "Vampires" },
-  { value: "videoGames", label: "Video Games" },
+  { value: "video games", label: "Video Games" },
   { value: "villainess", label: "Villainess" },
-  { value: "virtualReality", label: "Virtual Reality" },
+  { value: "virtual reality", label: "Virtual Reality" },
   { value: "zombies", label: "Zombies" },
-  { value: "actionAdventure", label: "Action / Adventure" },
+  { value: "action adventure", label: "Action / Adventure" },
   { value: "adult", label: "Adult" },
   { value: "adventure", label: "Adventure" },
   { value: "bisexual", label: "Bisexual" },
   { value: "comedy", label: "Comedy" },
-  { value: "comicsAdaptations", label: "Comics adaptations" },
-  { value: "comingOfAge", label: "Coming-of-age" },
-  { value: "detectiveMystery", label: "Detective / Mystery" },
+  { value: "comics adaptations", label: "Comics adaptations" },
+  { value: "coming of age", label: "Coming-of-age" },
+  { value: "detective mystery", label: "Detective / Mystery" },
   { value: "doujinshi", label: "Dōjinshi (Self-published)" },
   { value: "drama", label: "Drama" },
-  { value: "ecchiErotic", label: "Ecchi / Erotic" },
+  { value: "ecchi erotic", label: "Ecchi / Erotic" },
   { value: "fantasy", label: "Fantasy (includes Isekai)" },
-  { value: "genderBender", label: "Gender Bender" },
-  { value: "graphicNovels", label: "Graphic Novels" },
+  { value: "gender bender", label: "Gender Bender" },
+  { value: "graphic novels", label: "Graphic Novels" },
   { value: "harem", label: "Harem" },
   { value: "historical", label: "Historical / Historical Fiction / Alternative Histories" },
   { value: "horror", label: "Horror" },
-  { value: "howToGakushu", label: "How-to / Gakushu" },
+  { value: "how to gakushu", label: "How-to / Gakushu" },
   { value: "humorous", label: "Humorous" },
   { value: "legal", label: "Legal" },
   { value: "medical", label: "Medical" },
   { value: "magical", label: "Magical / Magical Girl" },
-  { value: "martialArts", label: "Martial Arts" },
+  { value: "martial arts", label: "Martial Arts" },
   { value: "mecha", label: "Mecha (Machines and Robots)" },
-  { value: "monsterKaiju", label: "Monster / Kaiju" },
+  { value: "monster kaiju", label: "Monster / Kaiju" },
   { value: "nonfiction", label: "Nonfiction" },
   { value: "paranormal", label: "Paranormal" },
   { value: "parody", label: "Parody" },
@@ -75,14 +75,14 @@ export const Tags = [
   { value: "queer", label: "Queer" },
   { value: "religious", label: "Religious" },
   { value: "romance", label: "Romance" },
-  { value: "romanticComedy", label: "Romantic Comedy" },
+  { value: "romantic comedy", label: "Romantic Comedy" },
   { value: "samurai", label: "Samurai" },
   { value: "school", label: "School" },
-  { value: "scienceFiction", label: "Science Fiction (includes Cyberpunk)" },
-  { value: "shojoAi", label: "Shōjo-ai (Girls’ Love)" },
-  { value: "shonenAi", label: "Shōnen-ai (Boys’ Love, or BL)" },
-  { value: "sliceOfLife", label: "Slice of Life" },
-  { value: "socialIssue", label: "Social issue" },
+  { value: "science fiction", label: "Science Fiction (includes Cyberpunk)" },
+  { value: "shojo ai", label: "Shōjo-ai (Girls’ Love)" },
+  { value: "shonen ai", label: "Shōnen-ai (Boys’ Love, or BL)" },
+  { value: "slice of life", label: "Slice of Life" },
+  { value: "social issue", label: "Social issue" },
   { value: "sports", label: "Sports" },
   { value: "spy", label: "Spy" },
   { value: "superhero", label: "Superhero" },
@@ -98,39 +98,51 @@ export const Tags = [
 ];
 
 export const State = [
-  { value: "onGoing", label: "Ongoing" },
+  { value: "on going", label: "Ongoing" },
   { value: "completed", label: "Completed" },
-  { value: "onHold", label: "On Hold" },
+  { value: "on hold", label: "On Hold" },
   { value: "cancelled", label: "Cancelled" },
 ];
 
 export const Status = [
   { value: "published", label: "Published" },
-  { value: "comingSoon", label: "Coming Soon" },
+  { value: "coming soon", label: "Coming Soon" },
 ];
 
-const AnimatedMulti = () => {
-  return (
-    <Select
-      closeMenuOnSelect={false}
-      components={animatedComponents}
-      defaultValue=""
-      isMulti
-      options={Tags}
-      className="rounded-md border-amaranth border text-licorice w-full"
-    />
-  );
+const AnimatedMulti = ({onChange}) => {
+
+    const handleChange = (selectedOptions) => {
+        onChange(selectedOptions);
+    };
+
+    return (
+        <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            defaultValue=""
+            isMulti
+            options={Tags}
+            className="rounded-md border-amaranth border text-licorice w-full"
+            onChange={handleChange}
+        />
+    );
 };
 
-const SingleOption = ({ isState }) => {
+const SingleOption = ({ isState, onChange }) => {
   const stateStatus = isState ? State : Status;
-  return (
-    <Select
-      className="basic-single rounded-md border-amaranth border text-licorice w-full"
-      classNamePrefix="select"
-      options={stateStatus}
-    />
-  );
+
+  const handleChange = (selectedOption) => {
+    onChange(selectedOption);
+  };
+
+    return (
+        <Select
+            className="basic-single rounded-md border-amaranth border text-licorice w-full"
+            classNamePrefix="select"
+            options={stateStatus}
+            onChange={handleChange}
+        />
+    );
 };
 
 export { AnimatedMulti, SingleOption };
