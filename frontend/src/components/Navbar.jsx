@@ -47,7 +47,6 @@ class Navbar extends React.Component {
               <Link className='block px-4 py-2 hover:bg-blush transition-colors rounded-lg' to={"/"}>Home</Link>
               <Link className='block px-4 py-2 hover:bg-blush transition-colors rounded-lg' to={"/about"}>About</Link>
               <Link className='block px-4 py-2 hover:bg-blush transition-colors rounded-lg' to={"/add-manga"}>Add Manga</Link>
-              <Link className='block px-4 py-2 hover:bg-blush transition-colors rounded-lg' to={"/edit-manga"}>Edit Manga</Link>
               <Link className='block px-4 py-2 hover:bg-blush transition-colors rounded-lg' to={"/search-manga"}>Search Manga</Link>
             </ul>
           </div>

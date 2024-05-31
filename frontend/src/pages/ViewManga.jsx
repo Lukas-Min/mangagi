@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toUpperCase, isObjectId } from '../../utils';
+import { toUpperCase, isObjectId, checkCoverArt } from '../../utils';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useViewMangaData } from '../hooks/useMangaData';
 import DeleteButton from '../components/DeleteButton';
@@ -122,7 +122,7 @@ const ViewManga = () => {
                             <div className="flex flex-wrap lg:justify-start gap-2 py-2">
                                 {mangaInfo.data.genre.map((tag, index) => (
                                     <div key={index} className="py-2 px-3 rounded-xl bg-blush text-licorice">
-                                        <h1 className="text-center font-bold">{tag}</h1>
+                                        <h1 className="text-center font-bold">{toUpperCase(tag)}</h1>
                                     </div>
                                 ))}
                             </div>
@@ -153,7 +153,7 @@ const ViewManga = () => {
                     <div className="order-1 lg:order-2 flex justify-center lg:mt-5">
                         <div className="max-h-full">
                             <img
-                                src={`https://uploads.mangadex.org/covers/${mangaInfo.data.manga_id}/${mangaInfo.data.cover_art}`}
+                                src={checkCoverArt(mangaInfo.data.cover_art, mangaInfo.data.manga_id)}
                                 alt="Cover Image"
                                 className="border-4 border-red-300 w-full h-auto rounded-lg max-h-[30vh] md:max-h-[40vh] lg:max-h-full"
                             />

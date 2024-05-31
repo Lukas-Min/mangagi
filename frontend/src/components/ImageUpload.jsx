@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const ImageUpload = () => {
+const ImageUpload = ({ onImageUpload }) => {
   const [imageSrc, setImageSrc] = useState('');
+  const [imageName, setImageName] = useState('');
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setImageSrc(e.target.result);
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        setImageName(file.name);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const removeImage = (event) => {
+  const removeImage = () => {
     setImageSrc('');
+    setImageName('');
   };
+
+  useEffect(() => {
+    if (imageName && onImageUpload) {
+      onImageUpload({ imageName, imageSrc });
+    }
+  }, [imageName, imageSrc, onImageUpload]);
 
   return (
     <>
       <label htmlFor="MangaImage" className="relative cursor-pointer group w-full h-full bg-raisin">
         <div className="rounded-lg w-full h-full md:h-full flex flex-col items-center justify-center hover:bg-black hover:bg-opacity-30 transition-colors duration-300">
-          {/* Uploaded image or upload prompt */}
           {imageSrc ? (
             <div className="w-full h-full relative">
               <img id="the-picture" src={imageSrc} alt="Uploaded" className="w-full h-full object-contain lg:object-cover rounded-lg" />
@@ -30,7 +38,7 @@ const ImageUpload = () => {
                 Remove
               </button>
               <div className="absolute text-lg inset-0 flex items-center justify-center transition-opacity duration-300 bg-black bg-opacity-70 text-white opacity-0 group-hover:opacity-100 font-bold">
-                Click to upload
+                Image Selected
               </div>
             </div>
           ) : (
@@ -45,8 +53,6 @@ const ImageUpload = () => {
       </label>
       <input id="MangaImage" className="photo-upload hidden" type="file" accept="image/jpg, image/jpeg, image/png, image/gif" onChange={handleImageChange} />
     </>
-
-
   );
 };
 

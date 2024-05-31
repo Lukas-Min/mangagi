@@ -1,9 +1,6 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-// UTILS
-import { toUpperCase } from '../../utils';
-
-// HOOKS
+import { toUpperCase, checkCoverArt } from '../../utils';
 import { useViewAllMangaData } from '../hooks/useMangaData';
 
 const MangaCover = () => {
@@ -24,9 +21,10 @@ const MangaCover = () => {
             {!isLoading && !error && (
                 <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-x-4 gap-y-4'>
                     {mangaData.data.map((manga, index) => (
+                        
                         <Link key={index} to={`/view-manga/${manga._id}`} className="border border-rose rounded-lg overflow-hidden relative transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
                             <img
-                                src={manga.cover_art ? `https://uploads.mangadex.org/covers/${manga.manga_id}/${manga.cover_art}` : `https://via.placeholder.com/400x500?text=No+Image`}
+                                src={checkCoverArt(manga.cover_art, manga.manga_id)}
                                 alt={manga.title ? manga.title : `Image ${index + 1}`}
                                 className="object-cover w-full h-full"
                             />
