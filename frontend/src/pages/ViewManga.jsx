@@ -22,7 +22,7 @@ const ViewManga = () => {
 
     const saveMangaDetails = async () => {
         try {
-            const saveResponse = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/add`, {
+            const saveResponse = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/save`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
