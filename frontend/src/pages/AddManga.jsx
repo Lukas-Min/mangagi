@@ -15,6 +15,7 @@ const AddManga = () => {
 
     const addMangaMutation = useMutation({
         mutationFn: async formData => {
+            console.log(formData);
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/add`, {
                 method: 'POST',
                 body: JSON.stringify(formData),
@@ -23,7 +24,7 @@ const AddManga = () => {
                 },
             });
     
-            // console.log(response)
+            console.log(response)
             if (!response.ok) 
             {
                 throw new Error('Failed to add manga');

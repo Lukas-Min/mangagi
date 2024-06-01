@@ -109,7 +109,7 @@ export const Status = [
   { value: "coming soon", label: "Coming Soon" },
 ];
 
-const AnimatedMulti = ({onChange}) => {
+const AnimatedMulti = ({onChange, tags}) => {
 
     const handleChange = (selectedOptions) => {
         onChange(selectedOptions);
@@ -120,6 +120,7 @@ const AnimatedMulti = ({onChange}) => {
             closeMenuOnSelect={false}
             components={animatedComponents}
             defaultValue=""
+            value={tags.map(tag => Tags.find(t => t.value === tag))}
             isMulti
             options={Tags}
             className="rounded-md border-amaranth border text-licorice w-full"
@@ -128,7 +129,7 @@ const AnimatedMulti = ({onChange}) => {
     );
 };
 
-const SingleOption = ({ isState, onChange }) => {
+const SingleOption = ({ isState, onChange, value }) => {
   const stateStatus = isState ? State : Status;
 
   const handleChange = (selectedOption) => {
@@ -139,6 +140,7 @@ const SingleOption = ({ isState, onChange }) => {
         <Select
             className="basic-single rounded-md border-amaranth border text-licorice w-full"
             classNamePrefix="select"
+            value={stateStatus.find(s => s.value === value)}
             options={stateStatus}
             onChange={handleChange}
         />
