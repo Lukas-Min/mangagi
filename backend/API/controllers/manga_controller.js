@@ -1,5 +1,5 @@
 //* THIS FILE CONTAINS THE APIs (custom and 3rd party)
-import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType, checkNumberField } from '../../utils.js';
+import { checkMandatoryField, checkStringField, containsCharacter, checkMandatoryArrayField, checkStringType, removeTimestamp } from '../../utils.js';
 import MangaModel from '../models/manga_model.js';
 
 import { fileURLToPath } from 'url';
@@ -271,13 +271,8 @@ const addManga = async (req, res, next) => { //* This adds the manga data in the
         {
             const __filename = fileURLToPath(import.meta.url);
             const __dirname = dirname(__filename);
-    
-            const currentDir = __dirname;
-    
-            const rootDir = path.resolve(currentDir, '..', '..', '..', 'frontend');
-            
-            const uploadFolder = path.join(rootDir, 'public', 'img', 'mangaImg');
-    
+                
+            const uploadFolder = path.resolve(__dirname, '..', '..', '..', 'frontend', 'public', 'img', 'mangaImg');
     
             const base64Data = cover_art_src.replace(/^data:image\/\w+;base64,/, '');
             const binaryData = Buffer.from(base64Data, 'base64');
@@ -304,7 +299,8 @@ const addManga = async (req, res, next) => { //* This adds the manga data in the
             manga_state,
             author,
             year_published,
-            cover_art: fileName
+            cover_art: fileName,
+            cover_art_src
         });
 
         await newManga.save();
@@ -360,11 +356,13 @@ const viewDetailsByObjId = async (req, res, next) => { //* This fetches existing
     }
 };
 
-// TODO: Add chapters to request body.
+
 const updateMangaDetail = async (req, res, next) => { //* This API updates manga data according to its oId (_id)
 
     let { id } = req.params;
-    let { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art } = req.body;
+    let { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art, cover_art_src } = req.body;
+
+    let fileName = null;
 
     try {
 
@@ -430,24 +428,60 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
         {
             return res.status(400).send({
                 successful: false,
-                message: "Genre is not defined."
+                message: "Author is not defined."
             })
         }
 
-        if(!checkNumberField(year_published))
+        if(!checkStringType(year_published))
         {
             return res.status(400).send({
                 successful: false,
-                message: "Year published is not of number data type."
+                message: "Year published is not of string data type."
             })
         }
 
-        if(!checkStringType(cover_art))
-        {
-            return res.status(400).send({
-                successful: false,
-                message: "Cover art is not of string data type."
-            })
+        const manga = await MangaModel.findById(id);
+
+        // Delete existing cover art file if it exists
+        if (manga.cover_art && manga.cover_art !== '') {
+            const __filename = fileURLToPath(import.meta.url);
+            const __dirname = dirname(__filename);
+
+            const uploadFolder = path.resolve(__dirname, '..', '..', '..', 'frontend', 'public', 'img', 'mangaImg');
+
+            const imagePath = path.join(uploadFolder, manga.cover_art);
+
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath); // Delete the file
+            }
+        }
+
+        await MangaModel.findByIdAndUpdate(id, {
+            $unset: {
+                cover_art: 1,
+                cover_art_src: 1
+            }
+        });
+
+        // Add new cover art file if provided
+        if (cover_art && cover_art_src) {
+            const __filename = fileURLToPath(import.meta.url);
+            const __dirname = dirname(__filename);
+
+            const uploadFolder = path.resolve(__dirname, '..', '..', '..', 'frontend', 'public', 'img', 'mangaImg');
+
+            const base64Data = cover_art_src.replace(/^data:image\/\w+;base64,/, '');
+            const binaryData = Buffer.from(base64Data, 'base64');
+
+            if (!fs.existsSync(uploadFolder)) {
+                fs.mkdirSync(uploadFolder, { recursive: true });
+            }
+
+            const cleared_cover_art = removeTimestamp(cover_art);
+            fileName = `${Date.now()}_${cleared_cover_art}`;
+            const imagePath = path.join(uploadFolder, fileName);
+
+            fs.writeFileSync(imagePath, binaryData);
         }
 
         const updateManga = await MangaModel.findByIdAndUpdate(id, {
@@ -461,7 +495,8 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
                 manga_state,
                 author,
                 year_published,
-                cover_art,
+                cover_art: fileName,
+                cover_art_src: cover_art_src,
                 updatedAt: new Date().toISOString()
             },
             $inc: { __v: 1 }
