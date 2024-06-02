@@ -23,7 +23,7 @@ export const useViewMangaData = (id) => {
             return data;
             
         },
-        queryKey: ['mangaInfo'],
+        queryKey: ['mangaInfo', id],
     });
 };
 
