@@ -51,7 +51,7 @@ const ViewManga = () => {
 
             if (!deleteResponse.ok) {
                 const errorData = await deleteResponse.json();
-                throw new Error(`Failed to delete manga: ${errorData.message}`);
+                throw new Error(`${errorData.message}`);
             }
 
             alert('Manga deleted successfully!');
