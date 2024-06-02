@@ -1,24 +1,35 @@
+// HOOKS
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 
+// COMPONENTS
 import ImageUpload from '../components/ImageUpload';
 import MangaForm from '../components/MangaForm';
 import Alert from '@mui/material/Alert';
 
 const AddManga = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
   const [imageFilename, setImageFilename] = useState('');
   const [imageSrc, setImageSrc] = useState('');
   const [saveMessage, setSaveMessage] = useState(null);
 
+  const [formData, setFormData] = useState({
+    title: '',
+    mangaId: '',
+    yearPublished: '',
+    chapters: '',
+    author: [],
+    state: '',
+    status: '',
+    tags: [],  
+    description: '',
+});
+
     const addMangaMutation = useMutation({
-        mutationFn: async formData => {
-            console.log(formData);
+        mutationFn: async form => {
+            console.log(form);
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/add`, {
                 method: 'POST',
-                body: JSON.stringify(formData),
+                body: JSON.stringify(form),
                 headers: {
                 'Content-Type': 'application/json',
                 },
@@ -40,22 +51,24 @@ const AddManga = () => {
     };
 
     const handleMangaSubmit = async () => {
-        const formData = {
-            title: searchParams.get('title') || '',
-            manga_id: searchParams.get('mangaId') || '',
-            year_published: searchParams.get('yearPublished') || '',
-            author: searchParams.getAll('author'),
-            manga_state: searchParams.get('state') || '',
-            manga_status: searchParams.get('status') || '',
-            chapters: searchParams.get('chapters') || '',
-            genre: searchParams.getAll('tags'),
-            description: searchParams.get('description') || '',
-            cover_art: imageFilename,
-            cover_art_src: imageSrc,
+        const form = {
+            title: formData.title || '',
+            manga_id: formData.mangaId || '',
+            year_published: formData.yearPublished || '',
+            author: formData.author,
+            manga_state: formData.state || '',
+            manga_status: formData.status || '',
+            chapters: formData.chapters || '',
+            genre: formData.tags,
+            description: formData.description || '',
+            cover_art: imageFilename || '',
+            cover_art_src: imageSrc || '',
         };
+
+        console.log(`Form: ${form}`)
     
         try {
-            await addMangaMutation.mutateAsync(formData);
+            await addMangaMutation.mutateAsync(form);
             setSaveMessage({ content: 'Manga added successfully!', severity: 'success' });
         } catch (error) {
             setSaveMessage({ content: `${error.message}`, severity: 'error' });
@@ -73,12 +86,12 @@ const AddManga = () => {
             </div>
         )}
         <h1 className="text-4xl font-bold my-6 text-center">Add Manga</h1>
-        <MangaForm onSubmit={handleMangaSubmit} mode={'add'} />
+        <MangaForm onSubmit={handleMangaSubmit} mode={'add'} formData={formData} setFormData={setFormData} />
         
       </div>
       <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin  h-auto width-auto min-h-[30vh] max-h-[30vh] lg:max-h-[70vh]">
         <div className="w-full h-full">
-          <ImageUpload className="w-full h-full object-cover" onImageUpload={handleImageUpload} />
+          <ImageUpload className="w-full h-full object-cover" onImageUpload={handleImageUpload} imageFilename={imageFilename} imageSrc={imageSrc} />
         </div>
       </div>
     </section>
