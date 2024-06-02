@@ -49,12 +49,18 @@ const MangaSchema = new Schema({
         default: "Unknown"
     },
     year_published: {
-        type: Number,
+        type: String,
         required: false,
         trim: true,
         default: null
     },
     cover_art: {
+        type: String,
+        required: false,
+        trim: true,
+        default: null
+    },
+    cover_art_src: {
         type: String,
         required: false,
         trim: true,
