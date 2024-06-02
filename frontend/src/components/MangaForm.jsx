@@ -5,10 +5,9 @@ import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
 import PropTypes from 'prop-types';
 
-const MangaForm = ({ onSubmit, mode, id, formData, setFormData }) => {
+const MangaForm = ({ onSubmit, mode, id, formData, setFormData, setImageFilename, setImageSrc }) => {
     
     const navigate = useNavigate();
-
 
     useEffect(() => {
         const fetchDataForEdit = async () => {
@@ -35,6 +34,9 @@ const MangaForm = ({ onSubmit, mode, id, formData, setFormData }) => {
                     description: data.data.description ?? '',
                 });
 
+                setImageSrc(data.data.cover_art_src || '');
+                setImageFilename(data.data.cover_art || '');
+                
             } catch (error) {
                 console.error(`Error fetching data: ${error.message}`);
             }
@@ -43,7 +45,7 @@ const MangaForm = ({ onSubmit, mode, id, formData, setFormData }) => {
         if (mode === 'edit') {
             fetchDataForEdit();
         }
-    }, [mode, id, setFormData]);
+    }, [mode, id, setFormData, setImageFilename, setImageSrc]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -95,9 +97,7 @@ const MangaForm = ({ onSubmit, mode, id, formData, setFormData }) => {
         }
 
         if (mode === 'add') {
-            navigate(`/add-manga?${params.toString()}`);
-        } else if (mode === 'edit') {
-            navigate(`/edit-manga?${params.toString()}`);
+            navigate(`/add-manga`);
         }
         onSubmit();
     };
@@ -213,7 +213,9 @@ MangaForm.propTypes = {
         tags: PropTypes.arrayOf(PropTypes.string),
         description: PropTypes.string
     }).isRequired,
-    setFormData: PropTypes.func.isRequired
+    setFormData: PropTypes.func.isRequired,
+    setImageFilename: PropTypes.func,
+    setImageSrc: PropTypes.func
 };
 
 export default MangaForm;
