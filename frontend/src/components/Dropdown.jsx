@@ -1,17 +1,18 @@
 import React from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import PropTypes from 'prop-types';
 
 const animatedComponents = makeAnimated();
 
-export const Tags = [
+const Tags = [
   { value: "aliens", label: "Aliens" },
   { value: "animals", label: "Animals" },
   { value: "cooking", label: "Cooking" },
-  { value: "cross dressing", label: "Crossdressing" },
+  { value: "cross dressing", label: "Cross Dressing" },
   { value: "delinquents", label: "Delinquents" },
   { value: "demons", label: "Demons" },
-  { value: "gender swap", label: "Genderswap" },
+  { value: "gender swap", label: "Gender Swap" },
   { value: "ghosts", label: "Ghosts" },
   { value: "gyaru", label: "Gyaru" },
   { value: "harem", label: "Harem" },
@@ -47,7 +48,7 @@ export const Tags = [
   { value: "adventure", label: "Adventure" },
   { value: "bisexual", label: "Bisexual" },
   { value: "comedy", label: "Comedy" },
-  { value: "comics adaptations", label: "Comics adaptations" },
+  { value: "comics adaptations", label: "Comics Adaptations" },
   { value: "coming of age", label: "Coming-of-age" },
   { value: "detective mystery", label: "Detective / Mystery" },
   { value: "doujinshi", label: "Dōjinshi (Self-published)" },
@@ -97,14 +98,14 @@ export const Tags = [
   { value: "yuri", label: "Yuri" }
 ];
 
-export const State = [
+const State = [
   { value: "on going", label: "Ongoing" },
   { value: "completed", label: "Completed" },
   { value: "on hold", label: "On Hold" },
   { value: "cancelled", label: "Cancelled" },
 ];
 
-export const Status = [
+const Status = [
   { value: "published", label: "Published" },
   { value: "coming soon", label: "Coming Soon" },
 ];
@@ -129,6 +130,11 @@ const AnimatedMulti = ({onChange, tags}) => {
     );
 };
 
+AnimatedMulti.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired
+};
+
 const SingleOption = ({ isState, onChange, value }) => {
   const stateStatus = isState ? State : Status;
 
@@ -147,4 +153,11 @@ const SingleOption = ({ isState, onChange, value }) => {
     );
 };
 
+SingleOption.propTypes = {
+    isState: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired
+};
+
 export { AnimatedMulti, SingleOption };
+export default { Tags, State, Status }; 
