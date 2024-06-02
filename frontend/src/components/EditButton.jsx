@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import PropTypes from 'prop-types';
 
 
 const EditButton = ({ id, onClick }) => {
@@ -10,6 +11,11 @@ const EditButton = ({ id, onClick }) => {
             </button>
         </Link>
     )
+}
+
+EditButton.propTypes = {
+    id: PropTypes.string.isRequired,
+    onClick: PropTypes.func
 }
 
 export default EditButton;
