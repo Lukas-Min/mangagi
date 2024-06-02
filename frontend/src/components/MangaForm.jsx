@@ -1,23 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SingleOption, AnimatedMulti } from './Dropdown';
 import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
+import PropTypes from 'prop-types';
 
-const MangaForm = ({ onSubmit, mode, id }) => {
+const MangaForm = ({ onSubmit, mode, id, formData, setFormData }) => {
     
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        title: '',
-        mangaId: '',
-        yearPublished: '',
-        chapters: '',
-        author: [],
-        state: '',
-        status: '',
-        tags: [],  
-        description: '',
-    });
+
 
     useEffect(() => {
         const fetchDataForEdit = async () => {
@@ -52,7 +43,7 @@ const MangaForm = ({ onSubmit, mode, id }) => {
         if (mode === 'edit') {
             fetchDataForEdit();
         }
-    }, [mode, id]);
+    }, [mode, id, setFormData]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -200,11 +191,29 @@ const MangaForm = ({ onSubmit, mode, id }) => {
 
                 <div className="flex justify-center w-full lg:col-span-2 gap-2">
                     <SaveButton type="submit" onClick={handleSubmit} />
-                    <CancelButton />
+                    <CancelButton id={id} />
                 </div>
             </div>
         </form>
     );
+};
+
+MangaForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    mode: PropTypes.oneOf(['add', 'edit']).isRequired,
+    id: PropTypes.string.isRequired,
+    formData: PropTypes.shape({
+        title: PropTypes.string,
+        mangaId: PropTypes.string,
+        yearPublished: PropTypes.string,
+        chapters: PropTypes.string,
+        author: PropTypes.arrayOf(PropTypes.string),
+        state: PropTypes.string,
+        status: PropTypes.string,
+        tags: PropTypes.arrayOf(PropTypes.string),
+        description: PropTypes.string
+    }).isRequired,
+    setFormData: PropTypes.func.isRequired
 };
 
 export default MangaForm;
