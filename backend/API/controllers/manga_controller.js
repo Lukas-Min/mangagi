@@ -362,7 +362,7 @@ const updateMangaDetail = async (req, res, next) => { //* This API updates manga
     let { id } = req.params;
     let { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art, cover_art_src } = req.body;
 
-    let fileName = null;
+    let fileName = cover_art;
 
     try {
 
