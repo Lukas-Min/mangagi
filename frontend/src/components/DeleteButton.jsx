@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types';
 
 const DeleteButton = ({ onClick }) => {
     return (
@@ -10,6 +10,10 @@ const DeleteButton = ({ onClick }) => {
             <h1 className="text-center font-bold">Delete</h1>
         </button>
     )
+}
+
+DeleteButton.propTypes = {
+    onClick: PropTypes.func,
 }
 
 export default DeleteButton;
