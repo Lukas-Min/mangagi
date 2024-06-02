@@ -118,22 +118,26 @@ const searchMangaById = async (req, res, next) => { //* This is a custom API tha
 const deleteMangabyId = async (req, res, next) => { //* This API deletes manga data according to its oId (_id)
     let { id } = req.params;
 
-    try {
-        if (!checkMandatoryField(id)) {
+    try 
+    {
+        if (!checkMandatoryField(id)) 
+        {
             return res.status(400).send({
                 successful: false,
                 message: "Object id is not defined."
             })
         }
 
-        if (!containsCharacter(id, '-')) {
+        if (!containsCharacter(id, '-')) 
+        {
             return res.status(400).send({
                 successful: false,
                 message: "Manga id is not allowed."
             })
         }
 
-        if (!checkStringField(id)) {
+        if (!checkStringField(id)) 
+        {
             return res.status(400).send({
                 successful: false,
                 message: "Object id is not a string."
@@ -144,30 +148,33 @@ const deleteMangabyId = async (req, res, next) => { //* This API deletes manga d
         const manga = await MangaModel.findById(id);
 
       
-        if (!manga) {
+        if (!manga) 
+        {
             return res.status(400).send({
                 successful: false,
                 message: "Error deleting manga data. Manga data does not exist"
             })
         }
 
-
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(__filename);
-
-        const currentDir = __dirname;
-
-        const uploadFolder = path.resolve(__dirname, '..', '..', '..', 'frontend', 'public', 'img', 'mangaImg');
-        
-        const imagePath = path.join(uploadFolder, manga.cover_art);
-
-        if (fs.existsSync(imagePath)) {
-            fs.unlinkSync(imagePath); // Delete the file
+        if  (manga.cover_art && manga.cover_art !== '')
+        {
+            const __filename = fileURLToPath(import.meta.url);
+            const __dirname = dirname(__filename);
+    
+            const uploadFolder = path.resolve(__dirname, '..', '..', '..', 'frontend', 'public', 'img', 'mangaImg');
+            
+            const imagePath = path.join(uploadFolder, manga.cover_art);
+    
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath); // Delete the file
+            }
         }
+
 
         const deleteManga = await MangaModel.findByIdAndDelete(id);
 
-        if (!deleteManga) {
+        if (!deleteManga) 
+        {
             return res.status(400).send({
                 successful: false,
                 message: "Error deleting manga data. Manga data does not exist"
@@ -176,12 +183,12 @@ const deleteMangabyId = async (req, res, next) => { //* This API deletes manga d
 
         return res.status(200).send({
             successful: true,
-            message: "Manga data deleted successfully.",
-            uploadFolder: uploadFolder,
-            imagePath: imagePath
+            message: "Manga data deleted successfully."
         })
 
-    } catch (err) {
+    } 
+    catch (err) 
+    {
         return res.status(500).send({
             successful: false,
             message: 'Error deleting manga data',
@@ -222,6 +229,7 @@ const findAllManga = async (req, res, next) => { //* This fetches all existing m
 const addManga = async (req, res, next) => { //* This adds the manga data in the database
     const { manga_id, title, description, chapters, genre, manga_status, manga_state, author, year_published, cover_art, cover_art_src} = req.body;
 
+    let fileName = null;
     
     try {
         if (!checkMandatoryField(title)) {
@@ -259,30 +267,32 @@ const addManga = async (req, res, next) => { //* This adds the manga data in the
             });
         }
 
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(__filename);
-
-        const currentDir = __dirname;
-
-        const rootDir = path.resolve(currentDir, '..', '..', '..', 'frontend');
-        
-        const uploadFolder = path.join(rootDir, 'public', 'img', 'mangaImg');
-
-
-        const base64Data = cover_art_src.replace(/^data:image\/\w+;base64,/, '');
-        const binaryData = Buffer.from(base64Data, 'base64');
-
-
-        if (!fs.existsSync(uploadFolder)) {
-            fs.mkdirSync(uploadFolder, { recursive: true });
+        if (cover_art !== '' && cover_art_src !== '')
+        {
+            const __filename = fileURLToPath(import.meta.url);
+            const __dirname = dirname(__filename);
+    
+            const currentDir = __dirname;
+    
+            const rootDir = path.resolve(currentDir, '..', '..', '..', 'frontend');
+            
+            const uploadFolder = path.join(rootDir, 'public', 'img', 'mangaImg');
+    
+    
+            const base64Data = cover_art_src.replace(/^data:image\/\w+;base64,/, '');
+            const binaryData = Buffer.from(base64Data, 'base64');
+    
+    
+            if (!fs.existsSync(uploadFolder)) {
+                fs.mkdirSync(uploadFolder, { recursive: true });
+            }
+    
+    
+            fileName = `${Date.now()}_${cover_art}`;
+            const imagePath = path.join(uploadFolder, fileName);
+    
+            fs.writeFileSync(imagePath, binaryData);
         }
-
-
-        const filename = `${Date.now()}_${cover_art}`;
-        const imagePath = path.join(uploadFolder, filename);
-
-        fs.writeFileSync(imagePath, binaryData);
-
 
         const newManga = new MangaModel({
             manga_id,
@@ -294,7 +304,7 @@ const addManga = async (req, res, next) => { //* This adds the manga data in the
             manga_state,
             author,
             year_published,
-            cover_art: filename
+            cover_art: fileName
         });
 
         await newManga.save();
@@ -303,10 +313,7 @@ const addManga = async (req, res, next) => { //* This adds the manga data in the
         return res.status(200).send({
             successful: true,
             message: 'Manga added successfully.',
-            data: newManga,
-            rootDir: rootDir,
-            uploadFolder: uploadFolder,
-            imagePath: imagePath
+            data: newManga
         });
 
     } catch (err) {
