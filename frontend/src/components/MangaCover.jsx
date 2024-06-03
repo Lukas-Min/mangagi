@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+// UTILS
 import { toUpperCase, checkCoverArt } from '../../utils';
+
+// HOOKS
 import { useViewAllMangaData } from '../hooks/useMangaData';
 
 const MangaCover = () => {
@@ -17,9 +21,9 @@ const MangaCover = () => {
                     </div>
                 </section>
             )}
-
             {!isLoading && !error && (
                 <div className='grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-x-4 gap-y-4'>
+                    
                     {mangaData.data.map((manga, index) => (
                         
                         <Link key={index} to={`/view-manga/${manga._id}`} className="border border-rose rounded-lg overflow-hidden relative transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
