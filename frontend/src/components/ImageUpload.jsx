@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+// UTILS
 import { checkCoverArt } from '../../utils';
 
 const ImageUpload = ({ onImageUpload, imageFilename, imageSrc, formData }) => {
@@ -24,11 +26,6 @@ const ImageUpload = ({ onImageUpload, imageFilename, imageSrc, formData }) => {
       onImageUpload({ imageName: imageFilename, imageSrc });
     }
   }, [imageFilename, imageSrc, onImageUpload]);
-
-  console.log(`Image Name: ${imageFilename}`);
-  console.log(`Image Src: ${imageSrc}`);
-
-
 
   return (
     <>
