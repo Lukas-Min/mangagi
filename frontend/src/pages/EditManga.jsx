@@ -38,10 +38,9 @@ const EditManga = () => {
                 },
             });
     
-            console.log(response)
-            if (!response.ok) 
-            {
-                throw new Error('Failed to add manga');
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message);
             }
 
             return response.json();
@@ -78,26 +77,25 @@ const EditManga = () => {
     };
 
 
-  return (
-    <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-[15vw] my-14">
-        
-      <div className="lg:col-span-2 border-2 order-2 lg:order-1 border-rose rounded-lg bg-raisin px-8 py-6">
-        {saveMessage && (
-            <div className="w-full">
-                <Alert severity={saveMessage.severity} onClose={() => setSaveMessage(null)}>{saveMessage.content}</Alert>
+    return (
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-[15vw] my-14">
+            <div className="lg:col-span-2 border-2 order-2 lg:order-1 border-rose rounded-lg bg-raisin px-8 py-6">
+                {saveMessage && (
+                    <div className="w-full">
+                        <Alert severity={saveMessage.severity} onClose={() => setSaveMessage(null)}>{saveMessage.content}</Alert>
+                    </div>
+                )}
+                <h1 className="text-4xl font-bold my-6 text-center">Edit Manga</h1>
+                <MangaForm onSubmit={handleMangaSubmit} mode={'edit'} id={id} formData={formData} setFormData={setFormData} setImageFilename={setImageFilename} setImageSrc={setImageSrc} />
+                
             </div>
-        )}
-        <h1 className="text-4xl font-bold my-6 text-center">Edit Manga</h1>
-        <MangaForm onSubmit={handleMangaSubmit} mode={'edit'} id={id} formData={formData} setFormData={setFormData} setImageFilename={setImageFilename} setImageSrc={setImageSrc} />
-        
-      </div>
-      <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin  h-auto width-auto min-h-[30vh] max-h-[30vh] lg:max-h-[70vh]">
-        <div className="w-full h-full">
-          <ImageUpload className="w-full h-full object-cover" onImageUpload={handleImageUpload} id={id} mode={'edit'} imageFilename={imageFilename} imageSrc={imageSrc} formData={formData}/>
-        </div>
-      </div>
-    </section>
-  );
+            <div className="lg:col-span-1 border-2 order-1 lg:order-2 border-rose rounded-lg bg-raisin  h-auto width-auto min-h-[30vh] max-h-[30vh] lg:max-h-[70vh]">
+                <div className="w-full h-full">
+                <ImageUpload className="w-full h-full object-cover" onImageUpload={handleImageUpload} id={id} mode={'edit'} imageFilename={imageFilename} imageSrc={imageSrc} formData={formData}/>
+                </div>
+            </div>
+        </section>
+    );
 };
 
 export default EditManga;

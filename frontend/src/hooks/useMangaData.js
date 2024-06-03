@@ -1,9 +1,10 @@
-import { isObjectId } from '../../utils';
 import axios from 'axios';
+
+// UTILS
+import { isObjectId } from '../../utils';
 
 // HOOKS
 import { useQuery } from '@tanstack/react-query';
-
 
 export const useViewMangaData = (id) => {
     
@@ -101,7 +102,6 @@ export const useViewAllMangaData = () => {
     return useQuery({
         queryFn: async () => {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URI}/mangas/find/all`);
-            // console.log(response)
 
             if (response.status === 404) {
                 throw new Error('Manga data not found');

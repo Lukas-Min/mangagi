@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+
+// HOOKS 
 import { useMangaSearch } from '../hooks/useMangaData';
 import { useState } from 'react';
 

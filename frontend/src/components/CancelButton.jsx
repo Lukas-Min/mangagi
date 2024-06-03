@@ -1,5 +1,7 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+// HOOKS
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const CancelButton = ({ id }) => {
     const location = useLocation();
