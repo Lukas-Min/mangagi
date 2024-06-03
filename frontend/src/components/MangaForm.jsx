@@ -1,9 +1,14 @@
+import PropTypes from 'prop-types';
+
+// HOOKS
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// COMPONENTS
 import { SingleOption, AnimatedMulti } from './Dropdown';
 import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
-import PropTypes from 'prop-types';
+
 
 const MangaForm = ({ onSubmit, mode, id, formData, setFormData, setImageFilename, setImageSrc }) => {
     
@@ -21,7 +26,6 @@ const MangaForm = ({ onSubmit, mode, id, formData, setFormData, setImageFilename
                 const data = await response.json();
                 console.log(`Fetched data: ${JSON.stringify(data)}`);
 
-                // Ensure all fields are populated with either fetched data or default values
                 setFormData({
                     title: data.data.title ?? '',
                     mangaId: data.data.manga_id ?? '',
