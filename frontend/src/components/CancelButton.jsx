@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const CancelButton = ({ id }) => {
     const location = useLocation();
@@ -15,6 +16,10 @@ const CancelButton = ({ id }) => {
             <h1 className="text-center font-bold">Cancel</h1>
         </button>
     );
+};
+
+CancelButton.propTypes = {
+    id: PropTypes.string.isRequired,
 };
 
 export default CancelButton;

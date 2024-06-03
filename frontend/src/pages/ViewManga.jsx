@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toUpperCase, isObjectId, checkCoverArt } from '../../utils';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useViewMangaData } from '../hooks/useMangaData';
 import DeleteButton from '../components/DeleteButton';
 import EditButton from '../components/EditButton';
@@ -16,6 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 const ViewManga = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const { data: mangaInfo, isLoading, error } = useViewMangaData(id);
     const [saveMessage, setSaveMessage] = useState(null);
     const [open, setOpen] = useState(false);
@@ -51,7 +52,7 @@ const ViewManga = () => {
 
             if (!deleteResponse.ok) {
                 const errorData = await deleteResponse.json();
-                throw new Error(`Failed to delete manga: ${errorData.message}`);
+                throw new Error(`${errorData.message}`);
             }
 
             alert('Manga deleted successfully!');
@@ -60,6 +61,14 @@ const ViewManga = () => {
             alert(`Error deleting manga: ${err.message}`);
         }
     };
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const savedMessage = params.get('saveMessage');
+        if (savedMessage) {
+            setSaveMessage(JSON.parse(decodeURIComponent(savedMessage)));
+        }
+    }, [location.search]);
 
     const handleClickOpen = () => {
         setOpen(true);

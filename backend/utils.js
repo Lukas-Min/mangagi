@@ -109,3 +109,14 @@ export const checkStringType = (field) => {
     return result;
 
 }
+
+export const removeTimestamp = (fileName) => {
+    const regex = /^\d+_.*\.\w+$/;
+    if (!regex.test(fileName)) {
+        return fileName; // Return original filename if it's empty
+    }
+    const parts = fileName.split('_');
+    if (parts.length > 1) {
+        return parts.slice(1).join('_'); // Join the parts after the first one (timestamp)
+    }
+};
