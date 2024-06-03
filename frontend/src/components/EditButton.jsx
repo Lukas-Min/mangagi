@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
 import PropTypes from 'prop-types';
 
-
 const EditButton = ({ id, onClick }) => {
     return (
         <Link to={`/edit-manga/${id}`} className="w-full">

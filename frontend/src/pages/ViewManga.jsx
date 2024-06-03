@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from "react";
+import ReactMarkdown from 'react-markdown';
+
+// UTILS
 import { toUpperCase, isObjectId, checkCoverArt } from '../../utils';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+
+// HOOKS
+import React, { useEffect, useState } from "react";
 import { useViewMangaData } from '../hooks/useMangaData';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+
+// COMPONENTS
 import DeleteButton from '../components/DeleteButton';
 import EditButton from '../components/EditButton';
 import SaveButton from '../components/SaveButton';
@@ -32,9 +39,14 @@ const ViewManga = () => {
             });
 
             if (!saveResponse.ok) {
-                throw new Error('Failed to save manga details');
+                const errorData = await saveResponse.json();
+                if (saveResponse.status === 400) {
+                    throw new Error(errorData.message);
+                } else {
+                    throw new Error('Failed to save manga details');
+                }
             }
-
+    
             setSaveMessage({ content: 'Manga saved successfully!', severity: 'success' });
         } catch (err) {
             setSaveMessage({ content: `Error saving manga: ${err.message}`, severity: 'error' });
@@ -52,13 +64,17 @@ const ViewManga = () => {
 
             if (!deleteResponse.ok) {
                 const errorData = await deleteResponse.json();
-                throw new Error(`${errorData.message}`);
+                if (deleteResponse.status === 400) {
+                    throw new Error(errorData.message);
+                } else {
+                    throw new Error(`${errorData.message}`);
+                }
             }
 
-            alert('Manga deleted successfully!');
-            navigate('/');
+            const saveMessage = { content: 'Manga deleted successfully!', severity: 'success' };
+            navigate(`/?saveMessage=${encodeURIComponent(JSON.stringify(saveMessage))}`);
         } catch (err) {
-            alert(`Error deleting manga: ${err.message}`);
+            setSaveMessage({ content: `Error saving manga: ${err.message}`, severity: 'error' });
         }
     };
 
@@ -67,8 +83,15 @@ const ViewManga = () => {
         const savedMessage = params.get('saveMessage');
         if (savedMessage) {
             setSaveMessage(JSON.parse(decodeURIComponent(savedMessage)));
+
+            params.delete('saveMessage');
+            navigate({ search: params.toString() }, { replace: true });
         }
-    }, [location.search]);
+    }, [location.search, navigate]);
+
+    const handleAlertClose = () => {
+        setSaveMessage(null);
+    };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -102,7 +125,7 @@ const ViewManga = () => {
                     <div className="col-span-1 lg:col-span-2 order-2 lg:order-1 flex flex-col justify-center items-center lg:items-start p-5">
                         {saveMessage && (
                             <div className="w-full">
-                                <Alert severity={saveMessage.severity} onClose={() => setSaveMessage(null)}>{saveMessage.content}</Alert>
+                                <Alert severity={saveMessage.severity} onClose={handleAlertClose}>{saveMessage.content}</Alert>
                             </div>
                         )}
                         <div className="w-full">
@@ -138,10 +161,7 @@ const ViewManga = () => {
                             <div className="text-justify py-5">
                                 {mangaInfo.data.description ? (
                                     mangaInfo.data.description.split('\n').map((paragraph, index) => (
-                                        <React.Fragment key={index}>
-                                            {paragraph}
-                                            <p> </p>
-                                        </React.Fragment>
+                                        <React.Fragment key={index}><ReactMarkdown>{paragraph}</ReactMarkdown></React.Fragment>
                                     ))
                                 ) : (
                                     "No available description."
